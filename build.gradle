@@ -4,6 +4,7 @@ plugins {
     id 'maven-publish'
     id 'net.neoforged.gradle' version '[6.0.18,6.2)'
     id 'org.spongepowered.mixin' version '0.7.+'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
 
 version = mod_version
@@ -122,6 +123,10 @@ repositories {
     // flatDir {
     //     dir 'libs'
     // }
+
+    maven {
+        url "https://cursemaven.com"
+    }
 }
 
 dependencies {
@@ -137,6 +142,10 @@ dependencies {
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
     // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
+
+    implementation fg.deobf("curse.maven:pipez-443900:4713656")
+    implementation fg.deobf("curse.maven:jei-238222:4712868")
+    implementation fg.deobf("curse.maven:refined-storage-243076:4630564")
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar

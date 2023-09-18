@@ -1,0 +1,35 @@
+{
+  "creativeModeTab.renewable_energy.general": "Renewable Energy",
+
+  "block.renewable_energy.solar_panel_mk_i": "Solar Panel Mk. I",
+  "block.renewable_energy.solar_panel_mk_ii": "Solar Panel Mk. II",
+  "block.renewable_energy.solar_panel_mk_iii": "Solar Panel Mk. III",
+  "block.renewable_energy.silicon_infused_glass": "Silicon Infused Glass Panel",
+  "block.renewable_energy.machine_casing": "Machine Casing",
+
+  "block.renewable_energy.hydro_power_turbine_mk_i": "Hydro Power Turbine Mk. I",
+  "block.renewable_energy.hydro_power_turbine_mk_ii": "Hydro Power Turbine Mk. II",
+  "block.renewable_energy.hydro_power_turbine_mk_iii": "Hydro Power Turbine Mk. III",
+
+  "item.renewable_energy.silicon": "Silicon",
+  "item.renewable_energy.carbon": "Carbon",
+  "item.renewable_energy.carbon_sheet": "Carbon Sheet",
+  "item.renewable_energy.dense_carbon_sheet": "Dense Carbon Sheet",
+
+  "item.renewable_energy.battery_mk_i": "Battery Mk. I",
+  "item.renewable_energy.battery_mk_ii": "Battery Mk. II",
+  "item.renewable_energy.battery_mk_iii": "Battery Mk. III",
+
+  "tooltip.renewable_energy.fe_produces": "Produces %d FE/t",
+  "tooltip.renewable_energy.fe_amount": "%d / %d FE",
+  "tooltip.renewable_energy.fe_storage": "Stores %d FE",
+
+  "text.renewable_energy.fe_stored": "- Stored: %d/%d FE",
+  "text.renewable_energy.fe_producing": "- Producing: %d FE/t",
+  "text.renewable_energy.solar_no_issues": "- No issues",
+  "text.renewable_energy.solar_raining": "- Raining",
+  "text.renewable_energy.solar_night": "- Nighttime",
+  "text.renewable_energy.solar_blocked": "- Blocked",
+
+  "menu.renewable_energy.solar_panel": "Solar Panel"
+}

@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "iii",
+        "iRi",
+        "iii"
+    ],
+    "key": {
+        "i": {
+            "tag": "forge:ingots/iron"
+        },
+        "R": {
+            "tag": "forge:dusts/redstone"
+        }
+    },
+    "result": {
+        "item": "renewable_energy:machine_casing",
+        "count": 1
+    }
+}

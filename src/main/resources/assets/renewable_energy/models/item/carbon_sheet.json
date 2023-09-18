@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "renewable_energy:item/carbon_sheet"
+  }
+}

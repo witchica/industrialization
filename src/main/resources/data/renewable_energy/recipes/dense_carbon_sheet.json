@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#R#",
+        "#R#"
+    ],
+    "key": {
+        "#": {
+            "item": "renewable_energy:carbon_sheet"
+        },
+        "R": {
+            "item": "minecraft:coal"
+        }
+    },
+    "result": {
+        "item": "renewable_energy:dense_carbon_sheet",
+        "count": 1
+    }
+}

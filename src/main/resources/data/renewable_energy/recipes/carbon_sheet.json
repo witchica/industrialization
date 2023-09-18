@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "tag": "forge:carbon"
+        }
+    },
+    "result": {
+        "item": "renewable_energy:carbon_sheet",
+        "count": 1
+    }
+}

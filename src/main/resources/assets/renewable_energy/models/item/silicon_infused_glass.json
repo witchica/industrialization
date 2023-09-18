@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "renewable_energy:block/silicon_infused_glass"
+  }
+}

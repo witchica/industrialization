@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_glass_pane_post",
+  "textures": {
+    "edge": "renewable_energy:block/silicon_infused_glass_top",
+    "pane": "renewable_energy:block/silicon_infused_glass"
+  }
+}

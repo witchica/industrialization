@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "iRi",
+        "BBB"
+    ],
+    "key": {
+        "#": {
+            "item": "renewable_energy:silicon_infused_glass"
+        },
+        "i": {
+            "tag": "forge:ingots/iron"
+        },
+        "R": {
+            "item": "renewable_energy:solar_panel_mk_ii"
+        },
+        "B": {
+            "item": "renewable_energy:dense_carbon_sheet"
+        }
+    },
+    "result": {
+        "item": "renewable_energy:solar_panel_mk_iii",
+        "count": 1
+    }
+}

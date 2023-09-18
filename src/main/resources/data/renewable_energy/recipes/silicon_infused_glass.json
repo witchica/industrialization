@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "RRR",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "tag": "forge:glass_panes"
+        },
+        "R": {
+            "tag": "forge:silicon"
+        }
+    },
+    "result": {
+        "item": "renewable_energy:silicon_infused_glass",
+        "count": 1
+    }
+}

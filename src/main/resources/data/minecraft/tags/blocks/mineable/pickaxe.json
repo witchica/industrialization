@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "renewable_energy:solar_panel_mk_i",
+    "renewable_energy:solar_panel_mk_ii",
+    "renewable_energy:solar_panel_mk_iii",
+    "renewable_energy:silicon_infused_glass",
+    "renewable_energy:machine_casing"
+  ]
+}

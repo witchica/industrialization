@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " i ",
+        "iRi",
+        "iSi"
+    ],
+    "key": {
+        "i": {
+            "tag": "forge:ingots/iron"
+        },
+        "R": {
+            "tag": "forge:dusts/redstone"
+        },
+        "S": {
+            "tag": "forge:silicon"
+        }
+    },
+    "result": {
+        "item": "renewable_energy:battery_mk_i",
+        "count": 1
+    }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_glass_pane_noside_alt",
+  "textures": {
+    "pane": "renewable_energy:block/silicon_infused_glass"
+  }
+}
