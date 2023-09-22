@@ -1,6 +1,5 @@
 package com.witchica.renewable.block.entity.base;
 
-import com.witchica.renewable.RenewableEnergy;
 import com.witchica.renewable.block.BaseEnergyGeneratorBlock;
 import com.witchica.renewable.client.screen.EnergyGeneratorIcon;
 import com.witchica.renewable.energy.RenewableEnergyEnergyStorage;
@@ -34,7 +33,9 @@ import java.util.List;
 public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
     private LazyOptional<RenewableEnergyEnergyStorage> energyStorage;
     public LazyOptional<RenewableEnergyItemStackHandler> itemStorage;
-    protected int fePerTick;
+    protected int baseFePerTick;
+    private int currentFePerTick;
+    private int tickCount;
     protected BaseEnergyGeneratorBlock generatorBlock;
 
     public BaseEnergyGeneratorBlockEntity(BlockEntityType<?> type, BlockPos pPos, BlockState pBlockState) {
@@ -52,7 +53,8 @@ public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
         }));
         itemStorage = LazyOptional.of(() -> new RenewableEnergyItemStackHandler(1, this));
 
-        this.fePerTick = fePerTick;
+        this.baseFePerTick = fePerTick;
+        this.currentFePerTick = updateCurrentFEPerTick();
     }
 
     public abstract List<Direction> getValidCapabilitySides();
@@ -142,6 +144,13 @@ public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
     }
 
     public void tick() {
+        /**
+         * Only update current FE per tick every 100 ticks (5secs) for more expensive checks
+         */
+        if(tickCount % 100 == 0) {
+            this.currentFePerTick = updateCurrentFEPerTick();
+        }
+
         if(level != null && !level.isClientSide()) {
             if(getCurrentEnergyLevel() < getMaximumEnergyLevel()) {
                 energyStorage.orElse(null).addEnergy(getCurrentFEPerTick(), false);
@@ -155,15 +164,21 @@ public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
                     ItemStack stack = stackHandler.getStackInSlot(0);
                     IEnergyStorage stackStorage = stack.getCapability(ForgeCapabilities.ENERGY).orElse(null);
 
-                    int extracted = storage.extractEnergy(fePerTick, true);
+                    int extracted = storage.extractEnergy(baseFePerTick, true);
                     int ableToTake = Math.min(extracted, stackStorage.getMaxEnergyStored() - stackStorage.getEnergyStored());
                     stackStorage.receiveEnergy((getCurrentEnergyLevel() == getMaximumEnergyLevel() && getCurrentFEPerTick() > 0) ? ableToTake : storage.extractEnergy(ableToTake, false), false);
                 }
             }
         }
+
+        tickCount++;
     }
 
-    public abstract int getCurrentFEPerTick();
+    public int getCurrentFEPerTick() {
+        return currentFePerTick;
+    }
+
+    public abstract int updateCurrentFEPerTick();
 
     public float getEnergyLevel() {
         RenewableEnergyEnergyStorage energy = energyStorage.orElse(null);

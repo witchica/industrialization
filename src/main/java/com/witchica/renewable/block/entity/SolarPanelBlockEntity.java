@@ -35,12 +35,12 @@ public class SolarPanelBlockEntity extends BaseEnergyGeneratorBlockEntity {
     }
 
     @Override
-    public int getCurrentFEPerTick() {
+    public int updateCurrentFEPerTick() {
         if(!canSeeSky() || !isDayTime()) {
             return 0;
         }
 
-        return (isRaining() ? this.fePerTick / 2 : this.fePerTick);
+        return (isRaining() ? this.baseFePerTick / 2 : this.baseFePerTick);
     }
 
     @Override

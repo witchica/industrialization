@@ -62,7 +62,7 @@ public class HydroPowerTurbineBlockEntity extends BaseEnergyGeneratorBlockEntity
     }
 
     @Override
-    public int getCurrentFEPerTick() {
+    public int updateCurrentFEPerTick() {
         return Math.round(getCurrentlySurroundingWaterBlocks() * waterSurroundMultiplier);
     }
 }
