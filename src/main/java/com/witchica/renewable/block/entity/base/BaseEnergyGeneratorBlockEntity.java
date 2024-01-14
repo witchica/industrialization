@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
-    private RenewableEnergyEnergyStorage energyStorage;
+    public RenewableEnergyEnergyStorage energyStorage;
     public RenewableEnergyItemStackHandler itemStorage;
     protected int baseFePerTick;
     private int currentFePerTick;
@@ -66,13 +66,11 @@ public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
         super.saveAdditional(pTag);
 
         if(energyStorage != null) {
-            RenewableEnergyEnergyStorage energyStorage = this.energyStorage;
             pTag.put("EnergyStorage", energyStorage.serializeNBT());
         }
 
         if(itemStorage != null) {
-            ItemStackHandler itemStackHandler = itemStorage;
-            pTag.put("ItemStorage", itemStackHandler.serializeNBT());
+            pTag.put("ItemStorage", itemStorage.serializeNBT());
         }
     }
 
@@ -81,13 +79,11 @@ public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
         super.load(pTag);
 
         if(energyStorage != null && pTag.contains("EnergyStorage")) {
-            RenewableEnergyEnergyStorage energyStorage = this.energyStorage;
             energyStorage.deserializeNBT(pTag.get("EnergyStorage"));
         }
 
         if(itemStorage != null && pTag.contains("ItemStorage")) {
-            ItemStackHandler itemStackHandler = itemStorage;
-            itemStackHandler.deserializeNBT(pTag.getCompound("ItemStorage"));
+            itemStorage.deserializeNBT(pTag.getCompound("ItemStorage"));
         }
     }
 
@@ -134,16 +130,13 @@ public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
             }
 
             if(itemStorage != null) {
-                RenewableEnergyItemStackHandler stackHandler = itemStorage;
-                EnergyStorage storage = energyStorage;
-
-                if(!stackHandler.getStackInSlot(0).isEmpty()) {
-                    ItemStack stack = stackHandler.getStackInSlot(0);
+                if(!itemStorage.getStackInSlot(0).isEmpty()) {
+                    ItemStack stack = itemStorage.getStackInSlot(0);
                     IEnergyStorage stackStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
 
-                    int extracted = storage.extractEnergy(baseFePerTick, true);
+                    int extracted = energyStorage.extractEnergy(baseFePerTick, true);
                     int ableToTake = Math.min(extracted, stackStorage.getMaxEnergyStored() - stackStorage.getEnergyStored());
-                    stackStorage.receiveEnergy((getCurrentEnergyLevel() == getMaximumEnergyLevel() && getCurrentFEPerTick() > 0) ? ableToTake : storage.extractEnergy(ableToTake, false), false);
+                    stackStorage.receiveEnergy((getCurrentEnergyLevel() == getMaximumEnergyLevel() && getCurrentFEPerTick() > 0) ? ableToTake : energyStorage.extractEnergy(ableToTake, false), false);
                 }
             }
         }

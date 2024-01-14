@@ -36,6 +36,10 @@ public class HydroPowerTurbineBlockEntity extends BaseEnergyGeneratorBlockEntity
     }
 
     public int getCurrentlySurroundingWaterBlocks() {
+        if(level == null) {
+            return 0;
+        }
+
         BlockPos min = getBlockPos().subtract(new Vec3i(1,1,1));
         int surrounded = 0;
 

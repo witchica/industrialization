@@ -5,6 +5,7 @@ import com.witchica.renewable.block.BaseEnergyGeneratorBlock;
 import com.witchica.renewable.block.HydroPowerTurbineBlock;
 import com.witchica.renewable.block.entity.HydroPowerTurbineBlockEntity;
 import com.witchica.renewable.block.entity.SolarPanelBlockEntity;
+import com.witchica.renewable.block.entity.base.BaseEnergyGeneratorBlockEntity;
 import com.witchica.renewable.client.screen.EnergyInterfaceScreen;
 import com.witchica.renewable.energy.RenewableEnergyItemEnergyHandler;
 import com.witchica.renewable.inventory.RenewableEnergyItemStackHandler;
@@ -13,6 +14,7 @@ import com.witchica.renewable.menu.EnergyInterfaceMenu;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -34,6 +36,8 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -116,6 +120,7 @@ public class RenewableEnergy
     {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC, "renewable_energy.toml");
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::registerCapabilities);
 
         BLOCKS.register(modEventBus);
         BLOCK_ENTITY_TYPES.register(modEventBus);
@@ -131,10 +136,32 @@ public class RenewableEnergy
 
     private void registerCapabilities(final RegisterCapabilitiesEvent event) {
         event.registerItem(Capabilities.EnergyStorage.ITEM,
-                (itemStack, context) -> {
-                    EnergyStorageItem item = (EnergyStorageItem) itemStack.getItem();
-                    return new RenewableEnergyItemEnergyHandler(itemStack, itemStack.getTag(), item.storageAmount.get(), item.transferRate.get());
-                }, BATTERY_MK_I.get(), BATTERY_MK_II.get(), BATTERY_MK_III.get());
+            (itemStack, context) -> {
+                EnergyStorageItem item = (EnergyStorageItem) itemStack.getItem();
+                return new RenewableEnergyItemEnergyHandler(itemStack, itemStack.getTag(), item.storageAmount.get(), item.transferRate.get());
+            }, BATTERY_MK_I.get(), BATTERY_MK_II.get(), BATTERY_MK_III.get());
+
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, SOLAR_PANEL_BLOCK_ENTITY_TYPE.get(), RenewableEnergy::getEnergyCapabiity);
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, HYDRO_POWER_TURBINE_BLOCK_ENTITY_TYPE.get(), RenewableEnergy::getEnergyCapabiity);
+
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, SOLAR_PANEL_BLOCK_ENTITY_TYPE.get(), RenewableEnergy::getItemCapability);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, HYDRO_POWER_TURBINE_BLOCK_ENTITY_TYPE.get(), RenewableEnergy::getItemCapability);
+    }
+
+    private static IEnergyStorage getEnergyCapabiity(BaseEnergyGeneratorBlockEntity entity, Direction side) {
+        if(entity.getValidCapabilitySides().contains(side)) {
+            return entity.energyStorage;
+        } else {
+            return null;
+        }
+    }
+
+    private static IItemHandler getItemCapability(BaseEnergyGeneratorBlockEntity entity, Direction side) {
+        if(entity.getValidCapabilitySides().contains(side)) {
+            return entity.itemStorage;
+        } else {
+            return null;
+        }
     }
 
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
