@@ -10,8 +10,8 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class EnergyInterfaceMenu extends AbstractContainerMenu {
     private final ContainerLevelAccess levelAccess;
@@ -26,7 +26,7 @@ public class EnergyInterfaceMenu extends AbstractContainerMenu {
     
     public EnergyInterfaceMenu(int pContainerId, Inventory playerInventory, BaseEnergyGeneratorBlockEntity solarPanelBlockEntity, ContainerLevelAccess levelAccess, Block blockType) {
         super(RenewableEnergy.ENERGY_INTERFACE_MENU_TYPE.get(), pContainerId);
-        this.inventory = solarPanelBlockEntity.itemStorage.orElse(null);
+        this.inventory = solarPanelBlockEntity.itemStorage;
         this.levelAccess = levelAccess;
         this.blockType = blockType;
         this.energyBlock = solarPanelBlockEntity;

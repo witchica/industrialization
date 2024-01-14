@@ -22,11 +22,11 @@ public class SolarPanelBlockEntity extends BaseEnergyGeneratorBlockEntity {
     }
 
     public boolean isRaining() {
-        return level.isRaining();
+        return level != null && level.isRaining();
     }
 
     public boolean canSeeSky() {
-        return level.canSeeSky(getBlockPos().above());
+        return level != null && level.canSeeSky(getBlockPos().above());
     }
 
     @Override

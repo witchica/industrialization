@@ -8,17 +8,17 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.neoforged.neoforge.capabilities.ICapabilityProvider;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class EnergyStorageItem extends Item {
-    private final ForgeConfigSpec.ConfigValue<Integer> storageAmount;
-    private final ForgeConfigSpec.ConfigValue<Integer> transferRate;
+    public final ModConfigSpec.ConfigValue<Integer> storageAmount;
+    public final ModConfigSpec.ConfigValue<Integer> transferRate;
 
-    public EnergyStorageItem(Properties pProperties, ForgeConfigSpec.ConfigValue<Integer> feStorage, ForgeConfigSpec.ConfigValue<Integer> feTransferRate) {
+    public EnergyStorageItem(Properties pProperties, ModConfigSpec.ConfigValue<Integer> feStorage, ModConfigSpec.ConfigValue<Integer> feTransferRate) {
         super(pProperties);
         this.storageAmount = feStorage;
         this.transferRate = feTransferRate;
@@ -42,11 +42,6 @@ public class EnergyStorageItem extends Item {
     @Override
     public int getDamage(ItemStack stack) {
         return storageAmount.get() - getCurrentlyStoredEnergy(stack);
-    }
-
-    @Override
-    public @Nullable ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-        return new RenewableEnergyItemEnergyHandler(stack, nbt, storageAmount.get(), transferRate.get());
     }
 
     public int getCurrentlyStoredEnergy(ItemStack stack) {

@@ -39,7 +39,7 @@ public class EnergyInterfaceScreen extends AbstractContainerScreen<EnergyInterfa
 
     @Override
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
-        this.renderBackground(pGuiGraphics);
+        this.renderTransparentBackground(pGuiGraphics);
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1f, 1f, 1f, 1f);

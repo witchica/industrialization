@@ -2,8 +2,8 @@ package com.witchica.renewable.inventory;
 
 import com.witchica.renewable.block.entity.base.BaseEnergyGeneratorBlockEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class RenewableEnergyItemStackHandler extends ItemStackHandler {
@@ -17,7 +17,7 @@ public class RenewableEnergyItemStackHandler extends ItemStackHandler {
 
     @Override
     public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-        return super.isItemValid(slot, stack) && stack.getCapability(ForgeCapabilities.ENERGY).isPresent();
+        return super.isItemValid(slot, stack) && stack.getCapability(Capabilities.EnergyStorage.ITEM) != null;
     }
 
     public BaseEnergyGeneratorBlockEntity getParent() {

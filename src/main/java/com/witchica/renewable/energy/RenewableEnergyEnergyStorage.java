@@ -1,17 +1,15 @@
 package com.witchica.renewable.energy;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.energy.EnergyStorage;
+import net.neoforged.neoforge.energy.EnergyStorage;
 
 import java.util.concurrent.Callable;
 import java.util.function.Supplier;
 
-public class RenewableEnergyEnergyStorage extends EnergyStorage {
-    private final Supplier<Boolean> onChanged;
+public abstract class RenewableEnergyEnergyStorage extends EnergyStorage {
 
-    public RenewableEnergyEnergyStorage(int capacity, int maxTransfer, int maxExtract, Supplier<Boolean> onChanged) {
+    public RenewableEnergyEnergyStorage(int capacity, int maxTransfer, int maxExtract) {
         super(capacity, maxTransfer, maxExtract);
-        this.onChanged = onChanged;
     }
 
     @Override
@@ -19,7 +17,7 @@ public class RenewableEnergyEnergyStorage extends EnergyStorage {
         int energyReceived = super.receiveEnergy(maxReceive, simulate);
 
         if(energyReceived != 0 && !simulate) {
-            onChanged.get();
+            onChanged();
         }
 
         return energyReceived;
@@ -30,7 +28,7 @@ public class RenewableEnergyEnergyStorage extends EnergyStorage {
         int energyExtracted = super.extractEnergy(maxExtract, simulate);
 
         if(energyExtracted != 0 && !simulate) {
-            onChanged.get();
+            onChanged();
         }
 
         return energyExtracted;
@@ -40,11 +38,13 @@ public class RenewableEnergyEnergyStorage extends EnergyStorage {
         int energyReceived = Math.min(capacity - energy, maxReceive);
 
         if(energyReceived != 0 && !simulate) {
-            onChanged.get();
+            onChanged();
         }
 
         if (!simulate)
             energy += energyReceived;
         return energyReceived;
     }
+
+    public abstract void onChanged();
 }

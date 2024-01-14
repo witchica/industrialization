@@ -16,23 +16,22 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.EnergyStorage;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.EnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Math;
 
 import java.util.List;
+import java.util.Optional;
 
 public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
-    private LazyOptional<RenewableEnergyEnergyStorage> energyStorage;
-    public LazyOptional<RenewableEnergyItemStackHandler> itemStorage;
+    private RenewableEnergyEnergyStorage energyStorage;
+    public RenewableEnergyItemStackHandler itemStorage;
     protected int baseFePerTick;
     private int currentFePerTick;
     private int tickCount;
@@ -47,11 +46,14 @@ public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
         int maxExtract = (int) generatorBlock.getFeExtractConfigValue().get();
         int fePerTick = (int) generatorBlock.getFePerTickConfigValue().get();
 
-        energyStorage = LazyOptional.of(() -> new RenewableEnergyEnergyStorage(maxCapcity, 0, maxExtract, () -> {
-            setChanged();
-            return true;
-        }));
-        itemStorage = LazyOptional.of(() -> new RenewableEnergyItemStackHandler(1, this));
+        energyStorage = new RenewableEnergyEnergyStorage(maxCapcity, 0, maxExtract) {
+            @Override
+            public void onChanged() {
+                setChanged();
+            }
+        };
+
+        itemStorage = new RenewableEnergyItemStackHandler(1, this);
 
         this.baseFePerTick = fePerTick;
         this.currentFePerTick = updateCurrentFEPerTick();
@@ -63,13 +65,13 @@ public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
 
-        if(energyStorage.isPresent()) {
-            RenewableEnergyEnergyStorage energyStorage = this.energyStorage.orElse(null);
+        if(energyStorage != null) {
+            RenewableEnergyEnergyStorage energyStorage = this.energyStorage;
             pTag.put("EnergyStorage", energyStorage.serializeNBT());
         }
 
-        if(itemStorage.isPresent()) {
-            ItemStackHandler itemStackHandler = itemStorage.orElse(null);
+        if(itemStorage != null) {
+            ItemStackHandler itemStackHandler = itemStorage;
             pTag.put("ItemStorage", itemStackHandler.serializeNBT());
         }
     }
@@ -78,13 +80,13 @@ public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
     public void load(CompoundTag pTag) {
         super.load(pTag);
 
-        if(energyStorage.isPresent() && pTag.contains("EnergyStorage")) {
-            RenewableEnergyEnergyStorage energyStorage = this.energyStorage.orElse(null);
+        if(energyStorage != null && pTag.contains("EnergyStorage")) {
+            RenewableEnergyEnergyStorage energyStorage = this.energyStorage;
             energyStorage.deserializeNBT(pTag.get("EnergyStorage"));
         }
 
-        if(itemStorage.isPresent() && pTag.contains("ItemStorage")) {
-            ItemStackHandler itemStackHandler = itemStorage.orElse(null);
+        if(itemStorage != null && pTag.contains("ItemStorage")) {
+            ItemStackHandler itemStackHandler = itemStorage;
             itemStackHandler.deserializeNBT(pTag.getCompound("ItemStorage"));
         }
     }
@@ -114,31 +116,6 @@ public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
         level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 2);
     }
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
-        if(cap == ForgeCapabilities.ENERGY) {
-            return energyStorage.cast();
-        } else if(cap == ForgeCapabilities.ITEM_HANDLER) {
-            return itemStorage.cast();
-        }
-
-        return super.getCapability(cap);
-    }
-
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if(side == null || getValidCapabilitySides().contains(side)) {
-            if(cap == ForgeCapabilities.ENERGY) {
-                return energyStorage.cast();
-            }
-            else if(cap == ForgeCapabilities.ITEM_HANDLER) {
-                return itemStorage.cast();
-            }
-        }
-
-        return super.getCapability(cap, side);
-    }
-
     public static <T extends BlockEntity> void tickHelper(Level level, BlockPos pos, BlockState state, T energyGeneratorBlock) {
         ((BaseEnergyGeneratorBlockEntity) energyGeneratorBlock).tick();
     }
@@ -153,16 +130,16 @@ public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
 
         if(level != null && !level.isClientSide()) {
             if(getCurrentEnergyLevel() < getMaximumEnergyLevel()) {
-                energyStorage.orElse(null).addEnergy(getCurrentFEPerTick(), false);
+                energyStorage.addEnergy(getCurrentFEPerTick(), false);
             }
 
-            if(itemStorage.isPresent()) {
-                RenewableEnergyItemStackHandler stackHandler = itemStorage.orElse(null);
-                EnergyStorage storage = energyStorage.orElse(null);
+            if(itemStorage != null) {
+                RenewableEnergyItemStackHandler stackHandler = itemStorage;
+                EnergyStorage storage = energyStorage;
 
                 if(!stackHandler.getStackInSlot(0).isEmpty()) {
                     ItemStack stack = stackHandler.getStackInSlot(0);
-                    IEnergyStorage stackStorage = stack.getCapability(ForgeCapabilities.ENERGY).orElse(null);
+                    IEnergyStorage stackStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
 
                     int extracted = storage.extractEnergy(baseFePerTick, true);
                     int ableToTake = Math.min(extracted, stackStorage.getMaxEnergyStored() - stackStorage.getEnergyStored());
@@ -181,7 +158,7 @@ public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
     public abstract int updateCurrentFEPerTick();
 
     public float getEnergyLevel() {
-        RenewableEnergyEnergyStorage energy = energyStorage.orElse(null);
+        RenewableEnergyEnergyStorage energy = energyStorage;
         if(energy.getEnergyStored() == 0) {
             return 0;
         }
@@ -190,12 +167,12 @@ public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
     }
 
     public int getCurrentEnergyLevel() {
-        RenewableEnergyEnergyStorage energy = energyStorage.orElse(null);
+        RenewableEnergyEnergyStorage energy = energyStorage;
         return energy.getEnergyStored();
     }
 
     public int getMaximumEnergyLevel() {
-        RenewableEnergyEnergyStorage energy = energyStorage.orElse(null);
+        RenewableEnergyEnergyStorage energy = energyStorage;
         return energy.getMaxEnergyStored();
     }
 

@@ -1,34 +1,34 @@
 package com.witchica.renewable;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 // An example config class. This is not required, but it's a good idea to have one to keep your config organized.
 // Demonstrates how to use Forge's config APIs
 @Mod.EventBusSubscriber(modid = RenewableEnergy.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Config
 {
-    private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+    private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    public static ForgeConfigSpec.ConfigValue<Integer> GENERATOR_MK_I_FE;
-    public static ForgeConfigSpec.ConfigValue<Integer> GENERATOR_MK_II_FE;
-    public static ForgeConfigSpec.ConfigValue<Integer> GENERATOR_MK_III_FE;
-    public static ForgeConfigSpec.ConfigValue<Integer> GENERATOR_MK_I_FE_STORAGE;
-    public static ForgeConfigSpec.ConfigValue<Integer> GENERATOR_MK_II_FE_STORAGE;
-    public static ForgeConfigSpec.ConfigValue<Integer> GENERATOR_MK_III_FE_STORAGE;
-    public static ForgeConfigSpec.ConfigValue<Integer> MK_I_FE_TRANSFER_RATE;
-    public static ForgeConfigSpec.ConfigValue<Integer> MK_II_FE_TRANSFER_RATE;
-    public static ForgeConfigSpec.ConfigValue<Integer> MK_III_FE_TRANSFER_RATE;
-    public static ForgeConfigSpec.ConfigValue<Integer> BATTERY_MK_I_FE_STORAGE;
-    public static ForgeConfigSpec.ConfigValue<Integer> BATTERY_MK_II_FE_STORAGE;
-    public static ForgeConfigSpec.ConfigValue<Integer> BATTERY_MK_III_FE_STORAGE;
-    public static ForgeConfigSpec.ConfigValue<Float> HYDRO_POWER_TURBINE_WATER_MK_I_MULTIPLIER;
-    public static ForgeConfigSpec.ConfigValue<Float> HYDRO_POWER_TURBINE_WATER_MK_II_MULTIPLIER;
-    public static ForgeConfigSpec.ConfigValue<Float> HYDRO_POWER_TURBINE_WATER_MK_III_MULTIPLIER;
+    public static ModConfigSpec.ConfigValue<Integer> GENERATOR_MK_I_FE;
+    public static ModConfigSpec.ConfigValue<Integer> GENERATOR_MK_II_FE;
+    public static ModConfigSpec.ConfigValue<Integer> GENERATOR_MK_III_FE;
+    public static ModConfigSpec.ConfigValue<Integer> GENERATOR_MK_I_FE_STORAGE;
+    public static ModConfigSpec.ConfigValue<Integer> GENERATOR_MK_II_FE_STORAGE;
+    public static ModConfigSpec.ConfigValue<Integer> GENERATOR_MK_III_FE_STORAGE;
+    public static ModConfigSpec.ConfigValue<Integer> MK_I_FE_TRANSFER_RATE;
+    public static ModConfigSpec.ConfigValue<Integer> MK_II_FE_TRANSFER_RATE;
+    public static ModConfigSpec.ConfigValue<Integer> MK_III_FE_TRANSFER_RATE;
+    public static ModConfigSpec.ConfigValue<Integer> BATTERY_MK_I_FE_STORAGE;
+    public static ModConfigSpec.ConfigValue<Integer> BATTERY_MK_II_FE_STORAGE;
+    public static ModConfigSpec.ConfigValue<Integer> BATTERY_MK_III_FE_STORAGE;
+    public static ModConfigSpec.ConfigValue<Float> HYDRO_POWER_TURBINE_WATER_MK_I_MULTIPLIER;
+    public static ModConfigSpec.ConfigValue<Float> HYDRO_POWER_TURBINE_WATER_MK_II_MULTIPLIER;
+    public static ModConfigSpec.ConfigValue<Float> HYDRO_POWER_TURBINE_WATER_MK_III_MULTIPLIER;
 
-    static ForgeConfigSpec SPEC;
+    static ModConfigSpec SPEC;
 
     static {
         BUILDER.push("Generator FE Production");

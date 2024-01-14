@@ -21,7 +21,7 @@ public class WindTurbineBlockEntity extends BaseEnergyGeneratorBlockEntity {
         super(type, pPos, pBlockState);
 
         Direction direction = pBlockState.getValue(HorizontalDirectionalBlock.FACING);
-        clearArea = new AABB(pPos.relative(direction), pPos.relative(direction, 32));
+        clearArea = new AABB(pPos.relative(direction).getCenter(), pPos.relative(direction, 32).getCenter());
     }
 
     @Override
