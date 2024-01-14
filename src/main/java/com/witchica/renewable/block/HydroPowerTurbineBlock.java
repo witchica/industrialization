@@ -24,17 +24,6 @@ public class HydroPowerTurbineBlock extends BaseEnergyGeneratorBlock {
     }
 
     @Override
-    public void neighborChanged(BlockState pState, Level pLevel, BlockPos pPos, Block pNeighborBlock, BlockPos pNeighborPos, boolean pMovedByPiston) {
-        super.neighborChanged(pState, pLevel, pPos, pNeighborBlock, pNeighborPos, pMovedByPiston);
-
-        BlockEntity entity = pLevel.getBlockEntity(pPos);
-
-        if(entity != null && entity instanceof HydroPowerTurbineBlockEntity hydroPowerTurbineBlockEntity) {
-            hydroPowerTurbineBlockEntity.updateCurrentWaterSurroundState();
-        }
-    }
-
-    @Override
     public BlockEntityType<?> getBlockEntityType() {
         return RenewableEnergy.HYDRO_POWER_TURBINE_BLOCK_ENTITY_TYPE.get();
     }

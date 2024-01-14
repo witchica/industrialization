@@ -16,7 +16,6 @@ import java.util.List;
 public class HydroPowerTurbineBlockEntity extends BaseEnergyGeneratorBlockEntity {
     private static final List<Direction> VALID_CAPABILITY_SIDES = List.of(Direction.DOWN, Direction.UP, Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST);
     private final float waterSurroundMultiplier;
-    private int currentlySurroundedWaterBlocks;
 
     public HydroPowerTurbineBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(RenewableEnergy.HYDRO_POWER_TURBINE_BLOCK_ENTITY_TYPE.get(), pPos, pBlockState);
@@ -28,11 +27,6 @@ public class HydroPowerTurbineBlockEntity extends BaseEnergyGeneratorBlockEntity
     @Override
     public void onLoad() {
         super.onLoad();
-        updateCurrentWaterSurroundState();
-    }
-
-    public void updateCurrentWaterSurroundState() {
-        this.currentlySurroundedWaterBlocks = getCurrentlySurroundingWaterBlocks();
     }
 
     public int getCurrentlySurroundingWaterBlocks() {
