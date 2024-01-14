@@ -1,9 +1,9 @@
-package com.witchica.renewable.block.entity.base;
+package com.witchica.innovativeenergy.block.entity.base;
 
-import com.witchica.renewable.block.BaseEnergyGeneratorBlock;
-import com.witchica.renewable.client.screen.EnergyGeneratorIcon;
-import com.witchica.renewable.energy.RenewableEnergyEnergyStorage;
-import com.witchica.renewable.inventory.RenewableEnergyItemStackHandler;
+import com.witchica.innovativeenergy.block.BaseEnergyGeneratorBlock;
+import com.witchica.innovativeenergy.client.screen.EnergyGeneratorIcon;
+import com.witchica.innovativeenergy.energy.RenewableEnergyEnergyStorage;
+import com.witchica.innovativeenergy.inventory.RenewableEnergyItemStackHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -19,15 +19,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.energy.IEnergyStorage;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Math;
 
 import java.util.List;
-import java.util.Optional;
 
 public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
     public RenewableEnergyEnergyStorage energyStorage;

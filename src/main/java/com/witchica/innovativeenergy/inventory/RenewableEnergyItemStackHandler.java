@@ -1,6 +1,6 @@
-package com.witchica.renewable.inventory;
+package com.witchica.innovativeenergy.inventory;
 
-import com.witchica.renewable.block.entity.base.BaseEnergyGeneratorBlockEntity;
+import com.witchica.innovativeenergy.block.entity.base.BaseEnergyGeneratorBlockEntity;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;

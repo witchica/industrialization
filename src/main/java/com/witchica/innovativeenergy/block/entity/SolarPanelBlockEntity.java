@@ -1,8 +1,8 @@
-package com.witchica.renewable.block.entity;
+package com.witchica.innovativeenergy.block.entity;
 
-import com.witchica.renewable.RenewableEnergy;
-import com.witchica.renewable.block.entity.base.BaseEnergyGeneratorBlockEntity;
-import com.witchica.renewable.client.screen.EnergyGeneratorIcon;
+import com.witchica.innovativeenergy.InnovativeEnergy;
+import com.witchica.innovativeenergy.block.entity.base.BaseEnergyGeneratorBlockEntity;
+import com.witchica.innovativeenergy.client.screen.EnergyGeneratorIcon;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -13,7 +13,7 @@ import java.util.List;
 public class SolarPanelBlockEntity extends BaseEnergyGeneratorBlockEntity {
     private static final List<Direction> VALID_CAPABILITY_SIDES = List.of(Direction.DOWN, Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST);
     public SolarPanelBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(RenewableEnergy.SOLAR_PANEL_BLOCK_ENTITY_TYPE.get(), pPos, pBlockState);
+        super(InnovativeEnergy.SOLAR_PANEL_BLOCK_ENTITY_TYPE.get(), pPos, pBlockState);
     }
 
     public boolean isDayTime() {

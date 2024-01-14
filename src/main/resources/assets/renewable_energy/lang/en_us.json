@@ -1,35 +1,37 @@
 {
-  "creativeModeTab.renewable_energy.general": "Renewable Energy",
+  "creativeModeTab.innovative_energy.general": "Innovative Energy: General",
+  "creativeModeTab.innovative_energy.machines": "Innovative Energy: Machines",
+  "creativeModeTab.innovative_energy.generators": "Innovative Energy: Generators",
 
-  "block.renewable_energy.solar_panel_mk_i": "Solar Panel Mk. I",
-  "block.renewable_energy.solar_panel_mk_ii": "Solar Panel Mk. II",
-  "block.renewable_energy.solar_panel_mk_iii": "Solar Panel Mk. III",
-  "block.renewable_energy.silicon_infused_glass": "Silicon Infused Glass Panel",
-  "block.renewable_energy.machine_casing": "Machine Casing",
+  "block.innovative_energy.solar_panel_mk_i": "Solar Panel Mk. I",
+  "block.innovative_energy.solar_panel_mk_ii": "Solar Panel Mk. II",
+  "block.innovative_energy.solar_panel_mk_iii": "Solar Panel Mk. III",
+  "block.innovative_energy.silicon_infused_glass": "Silicon Infused Glass Panel",
+  "block.innovative_energy.machine_casing": "Machine Casing",
 
-  "block.renewable_energy.hydro_power_turbine_mk_i": "Hydro Power Turbine Mk. I",
-  "block.renewable_energy.hydro_power_turbine_mk_ii": "Hydro Power Turbine Mk. II",
-  "block.renewable_energy.hydro_power_turbine_mk_iii": "Hydro Power Turbine Mk. III",
+  "block.innovative_energy.hydro_power_turbine_mk_i": "Hydro Power Turbine Mk. I",
+  "block.innovative_energy.hydro_power_turbine_mk_ii": "Hydro Power Turbine Mk. II",
+  "block.innovative_energy.hydro_power_turbine_mk_iii": "Hydro Power Turbine Mk. III",
 
-  "item.renewable_energy.silicon": "Silicon",
-  "item.renewable_energy.carbon": "Carbon",
-  "item.renewable_energy.carbon_sheet": "Carbon Sheet",
-  "item.renewable_energy.dense_carbon_sheet": "Dense Carbon Sheet",
+  "item.innovative_energy.silicon": "Silicon",
+  "item.innovative_energy.carbon": "Carbon",
+  "item.innovative_energy.carbon_sheet": "Carbon Sheet",
+  "item.innovative_energy.dense_carbon_sheet": "Dense Carbon Sheet",
 
-  "item.renewable_energy.battery_mk_i": "Battery Mk. I",
-  "item.renewable_energy.battery_mk_ii": "Battery Mk. II",
-  "item.renewable_energy.battery_mk_iii": "Battery Mk. III",
+  "item.innovative_energy.battery_mk_i": "Battery Mk. I",
+  "item.innovative_energy.battery_mk_ii": "Battery Mk. II",
+  "item.innovative_energy.battery_mk_iii": "Battery Mk. III",
 
-  "tooltip.renewable_energy.fe_produces": "Produces %d FE/t",
-  "tooltip.renewable_energy.fe_amount": "%d / %d FE",
-  "tooltip.renewable_energy.fe_storage": "Stores %d FE",
+  "tooltip.innovative_energy.fe_produces": "Produces %d FE/t",
+  "tooltip.innovative_energy.fe_amount": "%d / %d FE",
+  "tooltip.innovative_energy.fe_storage": "Stores %d FE",
 
-  "text.renewable_energy.fe_stored": "- Stored: %d/%d FE",
-  "text.renewable_energy.fe_producing": "- Producing: %d FE/t",
-  "text.renewable_energy.solar_no_issues": "- No issues",
-  "text.renewable_energy.solar_raining": "- Raining",
-  "text.renewable_energy.solar_night": "- Nighttime",
-  "text.renewable_energy.solar_blocked": "- Blocked",
+  "text.innovative_energy.fe_stored": "- Stored: %d/%d FE",
+  "text.innovative_energy.fe_producing": "- Producing: %d FE/t",
+  "text.innovative_energy.solar_no_issues": "- No issues",
+  "text.innovative_energy.solar_raining": "- Raining",
+  "text.innovative_energy.solar_night": "- Nighttime",
+  "text.innovative_energy.solar_blocked": "- Blocked",
 
-  "menu.renewable_energy.solar_panel": "Solar Panel"
+  "menu.innovative_energy.solar_panel": "Solar Panel"
 }

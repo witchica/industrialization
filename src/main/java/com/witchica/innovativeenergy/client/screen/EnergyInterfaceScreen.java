@@ -1,7 +1,7 @@
-package com.witchica.renewable.client.screen;
+package com.witchica.innovativeenergy.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.witchica.renewable.menu.EnergyInterfaceMenu;
+import com.witchica.innovativeenergy.menu.EnergyInterfaceMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;

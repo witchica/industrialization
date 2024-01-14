@@ -1,10 +1,6 @@
-package com.witchica.renewable.energy;
+package com.witchica.innovativeenergy.energy;
 
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.energy.EnergyStorage;
-
-import java.util.concurrent.Callable;
-import java.util.function.Supplier;
 
 public abstract class RenewableEnergyEnergyStorage extends EnergyStorage {
 

@@ -1,8 +1,8 @@
-package com.witchica.renewable.block;
+package com.witchica.innovativeenergy.block;
 
-import com.witchica.renewable.RenewableEnergy;
-import com.witchica.renewable.block.entity.base.BaseEnergyGeneratorBlockEntity;
-import com.witchica.renewable.menu.EnergyInterfaceMenu;
+import com.witchica.innovativeenergy.InnovativeEnergy;
+import com.witchica.innovativeenergy.block.entity.base.BaseEnergyGeneratorBlockEntity;
+import com.witchica.innovativeenergy.menu.EnergyInterfaceMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -43,7 +43,7 @@ public class BaseEnergyGeneratorBlock extends Block implements EntityBlock {
     }
 
     public BlockEntityType<?> getBlockEntityType() {
-        return RenewableEnergy.SOLAR_PANEL_BLOCK_ENTITY_TYPE.get();
+        return InnovativeEnergy.SOLAR_PANEL_BLOCK_ENTITY_TYPE.get();
     }
 
     @Override

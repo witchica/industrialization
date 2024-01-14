@@ -1,7 +1,7 @@
-package com.witchica.renewable.menu;
+package com.witchica.innovativeenergy.menu;
 
-import com.witchica.renewable.RenewableEnergy;
-import com.witchica.renewable.block.entity.base.BaseEnergyGeneratorBlockEntity;
+import com.witchica.innovativeenergy.InnovativeEnergy;
+import com.witchica.innovativeenergy.block.entity.base.BaseEnergyGeneratorBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -25,7 +25,7 @@ public class EnergyInterfaceMenu extends AbstractContainerMenu {
     }
     
     public EnergyInterfaceMenu(int pContainerId, Inventory playerInventory, BaseEnergyGeneratorBlockEntity solarPanelBlockEntity, ContainerLevelAccess levelAccess, Block blockType) {
-        super(RenewableEnergy.ENERGY_INTERFACE_MENU_TYPE.get(), pContainerId);
+        super(InnovativeEnergy.ENERGY_INTERFACE_MENU_TYPE.get(), pContainerId);
         this.inventory = solarPanelBlockEntity.itemStorage;
         this.levelAccess = levelAccess;
         this.blockType = blockType;

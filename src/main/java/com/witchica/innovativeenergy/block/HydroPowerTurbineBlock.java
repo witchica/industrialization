@@ -1,13 +1,7 @@
-package com.witchica.renewable.block;
+package com.witchica.innovativeenergy.block;
 
-import com.witchica.renewable.RenewableEnergy;
-import com.witchica.renewable.block.entity.HydroPowerTurbineBlockEntity;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import com.witchica.innovativeenergy.InnovativeEnergy;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class HydroPowerTurbineBlock extends BaseEnergyGeneratorBlock {
@@ -25,6 +19,6 @@ public class HydroPowerTurbineBlock extends BaseEnergyGeneratorBlock {
 
     @Override
     public BlockEntityType<?> getBlockEntityType() {
-        return RenewableEnergy.HYDRO_POWER_TURBINE_BLOCK_ENTITY_TYPE.get();
+        return InnovativeEnergy.HYDRO_POWER_TURBINE_BLOCK_ENTITY_TYPE.get();
     }
 }

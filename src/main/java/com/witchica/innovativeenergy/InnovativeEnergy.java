@@ -1,26 +1,25 @@
-package com.witchica.renewable;
+package com.witchica.innovativeenergy;
 
 import com.mojang.logging.LogUtils;
-import com.witchica.renewable.block.BaseEnergyGeneratorBlock;
-import com.witchica.renewable.block.HydroPowerTurbineBlock;
-import com.witchica.renewable.block.entity.HydroPowerTurbineBlockEntity;
-import com.witchica.renewable.block.entity.SolarPanelBlockEntity;
-import com.witchica.renewable.block.entity.base.BaseEnergyGeneratorBlockEntity;
-import com.witchica.renewable.client.screen.EnergyInterfaceScreen;
-import com.witchica.renewable.energy.RenewableEnergyItemEnergyHandler;
-import com.witchica.renewable.inventory.RenewableEnergyItemStackHandler;
-import com.witchica.renewable.item.EnergyStorageItem;
-import com.witchica.renewable.menu.EnergyInterfaceMenu;
+import com.witchica.innovativeenergy.block.BaseEnergyGeneratorBlock;
+import com.witchica.innovativeenergy.block.HydroPowerTurbineBlock;
+import com.witchica.innovativeenergy.block.entity.HydroPowerTurbineBlockEntity;
+import com.witchica.innovativeenergy.block.entity.SolarPanelBlockEntity;
+import com.witchica.innovativeenergy.block.entity.base.BaseEnergyGeneratorBlockEntity;
+import com.witchica.innovativeenergy.client.screen.EnergyInterfaceScreen;
+import com.witchica.innovativeenergy.energy.RenewableEnergyItemEnergyHandler;
+import com.witchica.innovativeenergy.item.EnergyStorageItem;
+import com.witchica.innovativeenergy.menu.EnergyInterfaceMenu;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -44,10 +43,10 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
 
-@Mod(RenewableEnergy.MODID)
-public class RenewableEnergy
+@Mod(InnovativeEnergy.MODID)
+public class InnovativeEnergy
 {
-    public static final String MODID = "renewable_energy";
+    public static final String MODID = "innovative_energy";
     private static final Logger LOGGER = LogUtils.getLogger();
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.Blocks.createBlocks(MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MODID);
@@ -94,9 +93,17 @@ public class RenewableEnergy
 
     public static DeferredHolder<BlockEntityType<?>, BlockEntityType<HydroPowerTurbineBlockEntity>> HYDRO_POWER_TURBINE_BLOCK_ENTITY_TYPE =
             BLOCK_ENTITY_TYPES.register("hydro_power_turbine", () -> BlockEntityType.Builder.of(HydroPowerTurbineBlockEntity::new, HYDRO_POWER_TURBINE_MK_I.get(), HYDRO_POWER_TURBINE_MK_II.get(), HYDRO_POWER_TURBINE_MK_III.get()).build(null));
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> RENEWABLE_ENERGY_GENERAL_TAB = CREATIVE_MODE_TABS.register("renewable_energy", () -> CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> INNOVATIVE_ENERGY_MACHINES = CREATIVE_MODE_TABS.register("renewable_energy_machines", () -> CreativeModeTab.builder()
             .withTabsBefore(CreativeModeTabs.COMBAT)
-            .title(Component.translatable("creativeModeTab.renewable_energy.general"))
+            .title(Component.translatable("creativeModeTab.innovative_energy.machines"))
+            .icon(() -> new ItemStack(SOLAR_PANEL_MK_I_ITEM.get()))
+            .displayItems((parameters, output) -> {
+                output.accept(Blocks.BARRIER);
+            }).build());
+
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> INNOVATIVE_ENERGY_GENERATORS = CREATIVE_MODE_TABS.register("renewable_energy_generators", () -> CreativeModeTab.builder()
+            .withTabsBefore(CreativeModeTabs.COMBAT)
+            .title(Component.translatable("creativeModeTab.innovative_energy.generators"))
             .icon(() -> new ItemStack(SOLAR_PANEL_MK_I_ITEM.get()))
             .displayItems((parameters, output) -> {
                 output.accept(SOLAR_PANEL_MK_I.get());
@@ -105,6 +112,13 @@ public class RenewableEnergy
                 output.accept(HYDRO_POWER_TURBINE_MK_I.get());
                 output.accept(HYDRO_POWER_TURBINE_MK_II.get());
                 output.accept(HYDRO_POWER_TURBINE_MK_III.get());
+            }).build());
+
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> INNOVATIVE_ENERGY_GENERAL = CREATIVE_MODE_TABS.register("renewable_energy_general", () -> CreativeModeTab.builder()
+            .withTabsBefore(CreativeModeTabs.COMBAT)
+            .title(Component.translatable("creativeModeTab.innovative_energy.general"))
+            .icon(() -> new ItemStack(CARBON.get()))
+            .displayItems((parameters, output) -> {
                 output.accept(MACHINE_CASING.get());
                 output.accept(SILICON.get());
                 output.accept(SILICON_INFUSED_GLASS.get());
@@ -116,7 +130,7 @@ public class RenewableEnergy
                 output.accept(BATTERY_MK_III.get());
             }).build());
 
-    public RenewableEnergy(IEventBus modEventBus)
+    public InnovativeEnergy(IEventBus modEventBus)
     {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC, "renewable_energy.toml");
         modEventBus.addListener(this::commonSetup);
@@ -141,11 +155,11 @@ public class RenewableEnergy
                 return new RenewableEnergyItemEnergyHandler(itemStack, itemStack.getTag(), item.storageAmount.get(), item.transferRate.get());
             }, BATTERY_MK_I.get(), BATTERY_MK_II.get(), BATTERY_MK_III.get());
 
-        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, SOLAR_PANEL_BLOCK_ENTITY_TYPE.get(), RenewableEnergy::getEnergyCapabiity);
-        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, HYDRO_POWER_TURBINE_BLOCK_ENTITY_TYPE.get(), RenewableEnergy::getEnergyCapabiity);
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, SOLAR_PANEL_BLOCK_ENTITY_TYPE.get(), InnovativeEnergy::getEnergyCapabiity);
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, HYDRO_POWER_TURBINE_BLOCK_ENTITY_TYPE.get(), InnovativeEnergy::getEnergyCapabiity);
 
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, SOLAR_PANEL_BLOCK_ENTITY_TYPE.get(), RenewableEnergy::getItemCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, HYDRO_POWER_TURBINE_BLOCK_ENTITY_TYPE.get(), RenewableEnergy::getItemCapability);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, SOLAR_PANEL_BLOCK_ENTITY_TYPE.get(), InnovativeEnergy::getItemCapability);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, HYDRO_POWER_TURBINE_BLOCK_ENTITY_TYPE.get(), InnovativeEnergy::getItemCapability);
     }
 
     private static IEnergyStorage getEnergyCapabiity(BaseEnergyGeneratorBlockEntity entity, Direction side) {

@@ -1,6 +1,6 @@
-package com.witchica.renewable.block.entity;
+package com.witchica.innovativeenergy.block.entity;
 
-import com.witchica.renewable.block.entity.base.BaseEnergyGeneratorBlockEntity;
+import com.witchica.innovativeenergy.block.entity.base.BaseEnergyGeneratorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Blocks;

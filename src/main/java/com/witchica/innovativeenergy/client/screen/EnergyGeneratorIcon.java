@@ -1,4 +1,4 @@
-package com.witchica.renewable.client.screen;
+package com.witchica.innovativeenergy.client.screen;
 
 public enum EnergyGeneratorIcon {
     SUN(0, 0),

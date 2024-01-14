@@ -1,8 +1,8 @@
-package com.witchica.renewable.block.entity;
+package com.witchica.innovativeenergy.block.entity;
 
-import com.witchica.renewable.RenewableEnergy;
-import com.witchica.renewable.block.HydroPowerTurbineBlock;
-import com.witchica.renewable.block.entity.base.BaseEnergyGeneratorBlockEntity;
+import com.witchica.innovativeenergy.InnovativeEnergy;
+import com.witchica.innovativeenergy.block.HydroPowerTurbineBlock;
+import com.witchica.innovativeenergy.block.entity.base.BaseEnergyGeneratorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -18,7 +18,7 @@ public class HydroPowerTurbineBlockEntity extends BaseEnergyGeneratorBlockEntity
     private final float waterSurroundMultiplier;
 
     public HydroPowerTurbineBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(RenewableEnergy.HYDRO_POWER_TURBINE_BLOCK_ENTITY_TYPE.get(), pPos, pBlockState);
+        super(InnovativeEnergy.HYDRO_POWER_TURBINE_BLOCK_ENTITY_TYPE.get(), pPos, pBlockState);
 
         HydroPowerTurbineBlock hydroPowerTurbineBlock = (HydroPowerTurbineBlock) this.generatorBlock;
         this.waterSurroundMultiplier = hydroPowerTurbineBlock.getWaterSurroundMultiplierConfig().get();

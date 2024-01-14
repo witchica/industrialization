@@ -1,13 +1,7 @@
-package com.witchica.renewable.energy;
+package com.witchica.innovativeenergy.energy;
 
-import com.witchica.renewable.RenewableEnergy;
-import com.witchica.renewable.inventory.RenewableEnergyItemStackHandler;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.capabilities.ICapabilityProvider;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class RenewableEnergyItemEnergyHandler extends RenewableEnergyEnergyStorage {
     private final ItemStack stack;

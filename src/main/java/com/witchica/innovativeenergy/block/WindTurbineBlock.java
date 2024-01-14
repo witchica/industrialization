@@ -1,6 +1,6 @@
-package com.witchica.renewable.block;
+package com.witchica.innovativeenergy.block;
 
-import com.witchica.renewable.block.entity.base.BaseEnergyGeneratorBlockEntity;
+import com.witchica.innovativeenergy.block.entity.base.BaseEnergyGeneratorBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
