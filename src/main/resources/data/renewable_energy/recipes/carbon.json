@@ -10,7 +10,7 @@
         }
     },
     "result": {
-        "item": "renewable_energy:carbon",
+        "item": "industrialization:carbon",
         "count": 1
     }
 }

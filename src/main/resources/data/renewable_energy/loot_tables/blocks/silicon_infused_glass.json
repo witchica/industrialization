@@ -21,7 +21,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "renewable_energy:silicon_infused_glass"
+          "name": "industrialization:silicon_infused_glass"
         }
       ],
       "rolls": 1.0

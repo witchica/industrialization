@@ -7,20 +7,20 @@
     ],
     "key": {
         "#": {
-            "item": "renewable_energy:silicon_infused_glass"
+            "item": "industrialization:silicon_infused_glass"
         },
         "i": {
             "tag": "forge:ingots/iron"
         },
         "R": {
-            "item": "renewable_energy:solar_panel_mk_i"
+            "item": "industrialization:solar_panel_mk_i"
         },
         "L": {
-            "item": "renewable_energy:carbon_sheet"
+            "item": "industrialization:carbon_sheet"
         }
     },
     "result": {
-        "item": "renewable_energy:solar_panel_mk_ii",
+        "item": "industrialization:solar_panel_mk_ii",
         "count": 1
     }
 }

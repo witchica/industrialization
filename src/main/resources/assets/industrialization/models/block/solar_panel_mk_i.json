@@ -1,0 +1,6 @@
+{
+  "parent": "industrialization:block/solar_panel",
+  "textures": {
+    "all": "industrialization:block/solar_panel_mk_i"
+  }
+}

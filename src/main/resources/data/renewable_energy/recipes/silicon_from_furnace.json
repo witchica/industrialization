@@ -3,7 +3,7 @@
     "ingredient": {
         "item": "minecraft:quartz"
     },
-    "result": "renewable_energy:silicon",
+    "result": "industrialization:silicon",
     "experience": 0.7,
     "cookingtime": 200
 }

@@ -17,7 +17,7 @@
               "source": "block_entity"
             }
           ],
-          "name": "renewable_energy:solar_panel_mk_i"
+          "name": "industrialization:solar_panel_mk_i"
         }
       ],
       "rolls": 1.0

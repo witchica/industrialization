@@ -1,0 +1,37 @@
+{
+  "creativeModeTab.industrialization.general": "Industrialization: General",
+  "creativeModeTab.industrialization.machines": "Industrialization: Machines",
+  "creativeModeTab.industrialization.generators": "Industrialization: Generators",
+
+  "block.industrialization.solar_panel_mk_i": "Solar Panel Mk. I",
+  "block.industrialization.solar_panel_mk_ii": "Solar Panel Mk. II",
+  "block.industrialization.solar_panel_mk_iii": "Solar Panel Mk. III",
+  "block.industrialization.silicon_infused_glass": "Silicon Infused Glass Panel",
+  "block.industrialization.machine_casing": "Machine Casing",
+
+  "block.industrialization.hydro_power_turbine_mk_i": "Hydro Power Turbine Mk. I",
+  "block.industrialization.hydro_power_turbine_mk_ii": "Hydro Power Turbine Mk. II",
+  "block.industrialization.hydro_power_turbine_mk_iii": "Hydro Power Turbine Mk. III",
+
+  "item.industrialization.silicon": "Silicon",
+  "item.industrialization.carbon": "Carbon",
+  "item.industrialization.carbon_sheet": "Carbon Sheet",
+  "item.industrialization.dense_carbon_sheet": "Dense Carbon Sheet",
+
+  "item.industrialization.battery_mk_i": "Battery Mk. I",
+  "item.industrialization.battery_mk_ii": "Battery Mk. II",
+  "item.industrialization.battery_mk_iii": "Battery Mk. III",
+
+  "tooltip.industrialization.fe_produces": "Produces %d FE/t",
+  "tooltip.industrialization.fe_amount": "%d / %d FE",
+  "tooltip.industrialization.fe_storage": "Stores %d FE",
+
+  "text.industrialization.fe_stored": "- Stored: %d/%d FE",
+  "text.industrialization.fe_producing": "- Producing: %d FE/t",
+  "text.industrialization.solar_no_issues": "- No issues",
+  "text.industrialization.solar_raining": "- Raining",
+  "text.industrialization.solar_night": "- Nighttime",
+  "text.industrialization.solar_blocked": "- Blocked",
+
+  "menu.industrialization.solar_panel": "Solar Panel"
+}

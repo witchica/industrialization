@@ -10,14 +10,14 @@
             "tag": "forge:ingots/iron"
         },
         "R": {
-            "item": "renewable_energy:battery_mk_ii"
+            "item": "industrialization:battery_mk_ii"
         },
         "V": {
             "tag": "forge:silicon"
         }
     },
     "result": {
-        "item": "renewable_energy:battery_mk_iii",
+        "item": "industrialization:battery_mk_iii",
         "count": 1
     }
 }
