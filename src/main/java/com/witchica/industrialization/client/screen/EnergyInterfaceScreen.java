@@ -1,6 +1,8 @@
 package com.witchica.industrialization.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.witchica.industrialization.client.screen.widgets.BaseIndustrializationScreen;
+import com.witchica.industrialization.client.screen.widgets.EnergyBarWidget;
 import com.witchica.industrialization.menu.EnergyInterfaceMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -10,65 +12,45 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.Level;
 
-public class EnergyInterfaceScreen extends AbstractContainerScreen<EnergyInterfaceMenu> {
-    public static final ResourceLocation ENERGY_INTERFACE_TEXTURE = new ResourceLocation("industrialization", "textures/gui/energy_interface.png");
-    public static final ResourceLocation ENERGY_INTERFACE_ICONS_TEXTURE = new ResourceLocation("industrialization", "textures/gui/energy_interface_icons.png");
 
-    private static final Component STORED_FE_TEXT = Component.translatable("text.industrialization.fe_stored");
-    private static final Component PRODUCING_FE_TEXT = Component.translatable("text.industrialization.fe_producing");
-    private static final Component SOLAR_NO_ISSUE = Component.translatable("text.industrialization.solar_no_issues");
-    private static final Component SOLAR_RAINING = Component.translatable("text.industrialization.solar_raining");
-    private static final Component SOLAR_NIGHT = Component.translatable("text.industrialization.solar_night");
-    private static final Component SOLAR_BLOCKED = Component.translatable("text.industrialization.solar_blocked");
-    private final Level level;
-
+public class EnergyInterfaceScreen extends BaseIndustrializationScreen<EnergyInterfaceMenu> {
     public EnergyInterfaceScreen(EnergyInterfaceMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
-        this.imageWidth = 176;
-        this.imageHeight = 166;
-        
-        this.level = pPlayerInventory.player.level();
     }
 
     @Override
-    protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
-        super.renderLabels(pGuiGraphics, pMouseX, pMouseY);
+    protected void init() {
+        super.init();
+        this.addRenderableWidget(new EnergyBarWidget(leftPos + 151, topPos + 5, 18, 56, menu.energyBlock.energyStorage));
 
-        this.renderTooltip(pGuiGraphics, pMouseX-leftPos, pMouseY-topPos);
     }
 
     @Override
-    protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
-        this.renderTransparentBackground(pGuiGraphics);
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+        super.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
+        drawSlot(guiGraphics, leftPos + 151, topPos + 63);
+    }
 
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
-        RenderSystem.setShaderTexture(0, ENERGY_INTERFACE_TEXTURE);
+    @Override
+    public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        this.renderBackground(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
 
-        pGuiGraphics.blit(ENERGY_INTERFACE_TEXTURE, leftPos, topPos, 0, 0, getXSize(), getYSize());
+        super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
 
-        float energyLevel = menu.energyBlock.getEnergyLevel();
-        pGuiGraphics.blit(ENERGY_INTERFACE_TEXTURE, leftPos + 152, topPos + 6 + (54 - (int) (energyLevel * 54)), 240, 54- (int) (energyLevel * 54), 16, (int) (energyLevel * 54));
+        pGuiGraphics.drawString(this.font, STORED_FE_TEXT.getString().formatted(menu.energyBlock.getCurrentEnergyLevel(), menu.energyBlock.getMaximumEnergyLevel()), leftPos + 8, topPos + 18, 4210752, false);
+        pGuiGraphics.drawString(this.font, PRODUCING_FE_TEXT.getString().formatted(menu.energyBlock.getCurrentFEPerTick()), leftPos + 8, topPos + 28, 4210752, false);
+        pGuiGraphics.drawString(this.font, menu.energyBlock.getCurrentStatusText(), leftPos + 8, topPos + 38, 4210752, false);
 
         int weatherIconX = leftPos + 131;
         int weatherIconY = topPos + 5;
 
         if(menu.energyBlock.hasCurrentIcon()) {
             EnergyGeneratorIcon icon = menu.energyBlock.getCurrentIcon();
-            pGuiGraphics.blit(ENERGY_INTERFACE_TEXTURE, weatherIconX, weatherIconY, 176, 32, 18, 18);
+            drawSlot(pGuiGraphics, weatherIconX, weatherIconY);
 
             if(icon != null) {
                 pGuiGraphics.blit(ENERGY_INTERFACE_ICONS_TEXTURE, weatherIconX + 1, weatherIconY + 1, icon.uvX * 16, icon.uvY * 16, 16, 16, 64, 64);
             }
         }
-    }
-
-    @Override
-    public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
-
-        pGuiGraphics.drawString(this.font, STORED_FE_TEXT.getString().formatted(menu.energyBlock.getCurrentEnergyLevel(), menu.energyBlock.getMaximumEnergyLevel()), leftPos + 8, topPos + 18, 4210752, false);
-        pGuiGraphics.drawString(this.font, PRODUCING_FE_TEXT.getString().formatted(menu.energyBlock.getCurrentFEPerTick()), leftPos + 8, topPos + 28, 4210752, false);
-        pGuiGraphics.drawString(this.font, menu.energyBlock.getCurrentStatusText(), leftPos + 8, topPos + 38, 4210752, false);
     }
 }

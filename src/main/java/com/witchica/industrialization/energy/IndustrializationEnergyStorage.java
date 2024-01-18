@@ -2,9 +2,9 @@ package com.witchica.industrialization.energy;
 
 import net.neoforged.neoforge.energy.EnergyStorage;
 
-public abstract class IndustrializationEnergyEnergyStorage extends EnergyStorage {
+public abstract class IndustrializationEnergyStorage extends EnergyStorage {
 
-    public IndustrializationEnergyEnergyStorage(int capacity, int maxTransfer, int maxExtract) {
+    public IndustrializationEnergyStorage(int capacity, int maxTransfer, int maxExtract) {
         super(capacity, maxTransfer, maxExtract);
     }
 
@@ -40,6 +40,14 @@ public abstract class IndustrializationEnergyEnergyStorage extends EnergyStorage
         if (!simulate)
             energy += energyReceived;
         return energyReceived;
+    }
+
+    /**
+     * Gets the energy level from 0 - 1
+     * @return float in range 0 - 1 of the current energy level
+     */
+    public float getEnergyLevel() {
+        return (float) getEnergyStored() / getMaxEnergyStored();
     }
 
     public abstract void onChanged();

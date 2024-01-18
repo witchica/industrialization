@@ -2,7 +2,9 @@ package com.witchica.industrialization.block.base;
 
 import com.witchica.industrialization.Industrialization;
 import com.witchica.industrialization.block.entity.base.BaseEnergyGeneratorBlockEntity;
+import com.witchica.industrialization.block.entity.base.BaseEnergyStorageBlockEntity;
 import com.witchica.industrialization.menu.EnergyInterfaceMenu;
+import com.witchica.industrialization.menu.EnergyStorageMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -24,27 +26,27 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.energy.EnergyStorage;
 import org.jetbrains.annotations.Nullable;
 
 public class BaseEnergyStorageBlock extends Block implements EntityBlock {
     private final ModConfigSpec.ConfigValue<Integer> feInputOutput;
     private final ModConfigSpec.ConfigValue<Integer> feMaxStorage;
-    private final BlockEntityType.BlockEntitySupplier<BaseEnergyGeneratorBlockEntity> blockEntitySupplier;
 
-    public BaseEnergyStorageBlock(Properties pProperties, ModConfigSpec.ConfigValue<Integer> feInputOutput, ModConfigSpec.ConfigValue<Integer> feMaxStorage, BlockEntityType.BlockEntitySupplier<BaseEnergyGeneratorBlockEntity> blockEntitySupplier) {
+    public BaseEnergyStorageBlock(Properties pProperties, ModConfigSpec.ConfigValue<Integer> feInputOutput, ModConfigSpec.ConfigValue<Integer> feMaxStorage) {
         super(pProperties);
         this.feInputOutput = feInputOutput;
         this.feMaxStorage = feMaxStorage;
-        this.blockEntitySupplier = blockEntitySupplier;
     }
 
     public BlockEntityType<?> getBlockEntityType() {
-        return Industrialization.ENERGY_STORAGE_ENTITY_TYPE.get();
+        return Industrialization.ENERGY_STORAGE_BLOCK_ENTITY_TYPE.get();
     }
+
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return blockEntitySupplier.create(pPos, pState);
+        return new BaseEnergyStorageBlockEntity(pPos, pState);
     }
 
     @Nullable
@@ -57,9 +59,9 @@ public class BaseEnergyStorageBlock extends Block implements EntityBlock {
     @Override
     public MenuProvider getMenuProvider(BlockState pState, Level pLevel, BlockPos pPos) {
         return new SimpleMenuProvider((pContainerId, pPlayerInventory, pPlayer) -> {
-            BaseEnergyGeneratorBlockEntity solarPanelBlockEntity = (BaseEnergyGeneratorBlockEntity) pLevel.getBlockEntity(pPos);
+            BaseEnergyStorageBlockEntity storageBlock = (BaseEnergyStorageBlockEntity) pLevel.getBlockEntity(pPos);
 
-            return new EnergyInterfaceMenu(pContainerId, pPlayerInventory, (BaseEnergyGeneratorBlockEntity) pLevel.getBlockEntity(pPos), ContainerLevelAccess.create(pLevel, pPos), this);
+            return new EnergyStorageMenu(pContainerId, pPlayerInventory, storageBlock, ContainerLevelAccess.create(pLevel, pPos), this);
         }, getName());
     }
 

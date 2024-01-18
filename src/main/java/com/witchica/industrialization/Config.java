@@ -27,6 +27,9 @@ public class Config
     public static ModConfigSpec.ConfigValue<Float> HYDRO_POWER_TURBINE_WATER_MK_I_MULTIPLIER;
     public static ModConfigSpec.ConfigValue<Float> HYDRO_POWER_TURBINE_WATER_MK_II_MULTIPLIER;
     public static ModConfigSpec.ConfigValue<Float> HYDRO_POWER_TURBINE_WATER_MK_III_MULTIPLIER;
+    public static ModConfigSpec.ConfigValue<Integer> ENERGY_STORAGE_MK_I_STORAGE_AMOUNT;
+    public static ModConfigSpec.ConfigValue<Integer> ENERGY_STORAGE_MK_II_STORAGE_AMOUNT;
+    public static ModConfigSpec.ConfigValue<Integer> ENERGY_STORAGE_MK_III_STORAGE_AMOUNT;
 
     static ModConfigSpec SPEC;
 
@@ -93,6 +96,19 @@ public class Config
 
         BUILDER.comment("Max Surround is 25 blocks, for each block how many FE should we generate? eg: 25 * multiplier (0.6) = 15");
         HYDRO_POWER_TURBINE_WATER_MK_III_MULTIPLIER = BUILDER.define("Hydro Turbine MK III Water Multiplier", 0.6f);
+
+        BUILDER.pop();
+
+        BUILDER.push("Energy Storage Max Storage Amounts");
+
+        BUILDER.comment("How much energy can an Energy Storage MK I hold?");
+        ENERGY_STORAGE_MK_I_STORAGE_AMOUNT = BUILDER.define("Energy Storage MK I Max Storage Amount", 8192);
+
+        BUILDER.comment("How much energy can an Energy Storage MK II hold?");
+        ENERGY_STORAGE_MK_II_STORAGE_AMOUNT = BUILDER.define("Energy Storage MK II Max Storage Amount", 16384);
+
+        BUILDER.comment("How much energy can an Energy Storage MK III hold?");
+        ENERGY_STORAGE_MK_III_STORAGE_AMOUNT = BUILDER.define("Energy Storage MK III Max Storage Amount", 32768);
 
         BUILDER.pop();
 

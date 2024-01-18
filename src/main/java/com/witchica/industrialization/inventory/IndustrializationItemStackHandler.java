@@ -22,7 +22,7 @@ public class IndustrializationItemStackHandler extends ItemStackHandler {
         return super.isItemValid(slot, stack) && storage != null;
     }
 
-    public BaseEnergyGeneratorBlockEntity getParent() {
+    public BaseEnergyGeneratorBlockEntity getParenst() {
         return parent;
     }
 }

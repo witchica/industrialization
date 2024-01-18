@@ -2,6 +2,7 @@ package com.witchica.industrialization.menu;
 
 import com.witchica.industrialization.Industrialization;
 import com.witchica.industrialization.block.entity.base.BaseEnergyGeneratorBlockEntity;
+import com.witchica.industrialization.block.entity.base.BaseEnergyStorageBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -13,19 +14,19 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
-public class EnergyInterfaceMenu extends AbstractContainerMenu {
+public class EnergyStorageMenu extends AbstractContainerMenu {
     private final ContainerLevelAccess levelAccess;
     private final Block blockType;
     private final IItemHandler inventory;
 
-    public final BaseEnergyGeneratorBlockEntity energyBlock;
+    public final BaseEnergyStorageBlockEntity energyBlock;
 
-    public EnergyInterfaceMenu(int pContainerId, Inventory playerInventory, FriendlyByteBuf buf) {
-        this(pContainerId, playerInventory, (BaseEnergyGeneratorBlockEntity) playerInventory.player.level().getBlockEntity(buf.readBlockPos()), ContainerLevelAccess.NULL, null);
+    public EnergyStorageMenu(int pContainerId, Inventory playerInventory, FriendlyByteBuf buf) {
+        this(pContainerId, playerInventory, (BaseEnergyStorageBlockEntity) playerInventory.player.level().getBlockEntity(buf.readBlockPos()), ContainerLevelAccess.NULL, null);
     }
-    
-    public EnergyInterfaceMenu(int pContainerId, Inventory playerInventory, BaseEnergyGeneratorBlockEntity solarPanelBlockEntity, ContainerLevelAccess levelAccess, Block blockType) {
-        super(Industrialization.ENERGY_INTERFACE_MENU_TYPE.get(), pContainerId);
+
+    public EnergyStorageMenu(int pContainerId, Inventory playerInventory, BaseEnergyStorageBlockEntity solarPanelBlockEntity, ContainerLevelAccess levelAccess, Block blockType) {
+        super(Industrialization.ENERGY_STORAGE_MENU_TYPE.get(), pContainerId);
         this.inventory = solarPanelBlockEntity.itemStorage;
         this.levelAccess = levelAccess;
         this.blockType = blockType;

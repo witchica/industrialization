@@ -1,12 +1,11 @@
 package com.witchica.industrialization.block.entity.base;
 
-import com.witchica.industrialization.block.BaseEnergyGeneratorBlock;
+import com.witchica.industrialization.Industrialization;
 import com.witchica.industrialization.block.base.BaseEnergyStorageBlock;
 import com.witchica.industrialization.client.screen.EnergyGeneratorIcon;
-import com.witchica.industrialization.energy.IndustrializationEnergyEnergyStorage;
+import com.witchica.industrialization.energy.IndustrializationEnergyStorage;
 import com.witchica.industrialization.inventory.IndustrializationItemStackHandler;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -15,7 +14,6 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -24,31 +22,29 @@ import net.neoforged.neoforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Math;
 
-import java.util.List;
-
 public class BaseEnergyStorageBlockEntity extends BlockEntity {
-    public IndustrializationEnergyEnergyStorage energyStorage;
+    public IndustrializationEnergyStorage energyStorage;
     public IndustrializationItemStackHandler itemStorage;
     protected int feInputOutputPerTick;
     private int tickCount;
     protected BaseEnergyStorageBlock storageBlock;
 
-    public BaseEnergyStorageBlockEntity(BlockEntityType<?> type, BlockPos pPos, BlockState pBlockState) {
-        super(type, pPos, pBlockState);
+    public BaseEnergyStorageBlockEntity(BlockPos pPos, BlockState pBlockState) {
+        super(Industrialization.ENERGY_STORAGE_BLOCK_ENTITY_TYPE.get(), pPos, pBlockState);
 
         this.storageBlock = (BaseEnergyStorageBlock) pBlockState.getBlock();
 
         int maxCapcity = (int) storageBlock.getFeMaxStorage().get();
         int feInputOutputPerTick = (int) storageBlock.getFeInputOutput().get();
 
-        energyStorage = new IndustrializationEnergyEnergyStorage(maxCapcity, feInputOutputPerTick, feInputOutputPerTick) {
+        energyStorage = new IndustrializationEnergyStorage(maxCapcity, feInputOutputPerTick, feInputOutputPerTick) {
             @Override
             public void onChanged() {
                 setChanged();
             }
         };
 
-        itemStorage = new IndustrializationItemStackHandler(2, this);
+        itemStorage = new IndustrializationItemStackHandler(2, null);
 
         this.feInputOutputPerTick = feInputOutputPerTick;
     }
@@ -57,11 +53,11 @@ public class BaseEnergyStorageBlockEntity extends BlockEntity {
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
 
-        if(energyStorage != null) {
+        if (energyStorage != null) {
             pTag.put("EnergyStorage", energyStorage.serializeNBT());
         }
 
-        if(itemStorage != null) {
+        if (itemStorage != null) {
             pTag.put("ItemStorage", itemStorage.serializeNBT());
         }
     }
@@ -70,11 +66,11 @@ public class BaseEnergyStorageBlockEntity extends BlockEntity {
     public void load(CompoundTag pTag) {
         super.load(pTag);
 
-        if(energyStorage != null && pTag.contains("EnergyStorage")) {
+        if (energyStorage != null && pTag.contains("EnergyStorage")) {
             energyStorage.deserializeNBT(pTag.get("EnergyStorage"));
         }
 
-        if(itemStorage != null && pTag.contains("ItemStorage")) {
+        if (itemStorage != null && pTag.contains("ItemStorage")) {
             itemStorage.deserializeNBT(pTag.getCompound("ItemStorage"));
         }
     }
@@ -109,15 +105,15 @@ public class BaseEnergyStorageBlockEntity extends BlockEntity {
     }
 
     public void tick() {
-        if(level != null && !level.isClientSide()) {
-            if(itemStorage != null) {
-                if(!itemStorage.getStackInSlot(0).isEmpty()) {
+        if (level != null && !level.isClientSide()) {
+            if (itemStorage != null) {
+                if (!itemStorage.getStackInSlot(0).isEmpty()) {
                     ItemStack stack = itemStorage.getStackInSlot(0);
                     IEnergyStorage stackStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
 
-                    int extracted = energyStorage.extractEnergy(baseFePerTick, true);
+                    int extracted = energyStorage.extractEnergy(feInputOutputPerTick, true);
                     int ableToTake = Math.min(extracted, stackStorage.getMaxEnergyStored() - stackStorage.getEnergyStored());
-                    stackStorage.receiveEnergy((getCurrentEnergyLevel() == getMaximumEnergyLevel() && getCurrentFEPerTick() > 0) ? ableToTake : energyStorage.extractEnergy(ableToTake, false), false);
+                    stackStorage.receiveEnergy(energyStorage.extractEnergy(ableToTake, false), false);
                 }
             }
         }
@@ -125,28 +121,22 @@ public class BaseEnergyStorageBlockEntity extends BlockEntity {
         tickCount++;
     }
 
-    public int getCurrentFEPerTick() {
-        return currentFePerTick;
-    }
-
-    public abstract int updateCurrentFEPerTick();
-
     public float getEnergyLevel() {
-        IndustrializationEnergyEnergyStorage energy = energyStorage;
-        if(energy.getEnergyStored() == 0) {
+        IndustrializationEnergyStorage energy = energyStorage;
+        if (energy.getEnergyStored() == 0) {
             return 0;
         }
 
-        return ((float)energy.getEnergyStored() / (float) energy.getMaxEnergyStored());
+        return ((float) energy.getEnergyStored() / (float) energy.getMaxEnergyStored());
     }
 
     public int getCurrentEnergyLevel() {
-        IndustrializationEnergyEnergyStorage energy = energyStorage;
+        IndustrializationEnergyStorage energy = energyStorage;
         return energy.getEnergyStored();
     }
 
     public int getMaximumEnergyLevel() {
-        IndustrializationEnergyEnergyStorage energy = energyStorage;
+        IndustrializationEnergyStorage energy = energyStorage;
         return energy.getMaxEnergyStored();
     }
 
@@ -164,3 +154,4 @@ public class BaseEnergyStorageBlockEntity extends BlockEntity {
     public Component getCurrentStatusText() {
         return Component.literal("");
     }
+}

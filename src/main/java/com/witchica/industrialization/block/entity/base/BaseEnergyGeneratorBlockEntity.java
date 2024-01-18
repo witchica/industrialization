@@ -1,8 +1,8 @@
 package com.witchica.industrialization.block.entity.base;
 
-import com.witchica.industrialization.block.BaseEnergyGeneratorBlock;
+import com.witchica.industrialization.block.base.BaseEnergyGeneratorBlock;
 import com.witchica.industrialization.client.screen.EnergyGeneratorIcon;
-import com.witchica.industrialization.energy.IndustrializationEnergyEnergyStorage;
+import com.witchica.industrialization.energy.IndustrializationEnergyStorage;
 import com.witchica.industrialization.inventory.IndustrializationItemStackHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -26,7 +26,7 @@ import org.joml.Math;
 import java.util.List;
 
 public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
-    public IndustrializationEnergyEnergyStorage energyStorage;
+    public IndustrializationEnergyStorage energyStorage;
     public IndustrializationItemStackHandler itemStorage;
     protected int baseFePerTick;
     private int currentFePerTick;
@@ -42,7 +42,7 @@ public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
         int maxExtract = (int) generatorBlock.getFeExtractConfigValue().get();
         int fePerTick = (int) generatorBlock.getFePerTickConfigValue().get();
 
-        energyStorage = new IndustrializationEnergyEnergyStorage(maxCapcity, 0, maxExtract) {
+        energyStorage = new IndustrializationEnergyStorage(maxCapcity, 0, maxExtract) {
             @Override
             public void onChanged() {
                 setChanged();
@@ -147,7 +147,7 @@ public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
     public abstract int updateCurrentFEPerTick();
 
     public float getEnergyLevel() {
-        IndustrializationEnergyEnergyStorage energy = energyStorage;
+        IndustrializationEnergyStorage energy = energyStorage;
         if(energy.getEnergyStored() == 0) {
             return 0;
         }
@@ -156,12 +156,12 @@ public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
     }
 
     public int getCurrentEnergyLevel() {
-        IndustrializationEnergyEnergyStorage energy = energyStorage;
+        IndustrializationEnergyStorage energy = energyStorage;
         return energy.getEnergyStored();
     }
 
     public int getMaximumEnergyLevel() {
-        IndustrializationEnergyEnergyStorage energy = energyStorage;
+        IndustrializationEnergyStorage energy = energyStorage;
         return energy.getMaxEnergyStored();
     }
 

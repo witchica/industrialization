@@ -1,4 +1,4 @@
-package com.witchica.industrialization.block;
+package com.witchica.industrialization.block.base;
 
 import com.witchica.industrialization.Industrialization;
 import com.witchica.industrialization.block.entity.base.BaseEnergyGeneratorBlockEntity;

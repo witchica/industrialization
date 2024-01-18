@@ -1,15 +1,19 @@
 package com.witchica.industrialization;
 
 import com.mojang.logging.LogUtils;
-import com.witchica.industrialization.block.BaseEnergyGeneratorBlock;
+import com.witchica.industrialization.block.base.BaseEnergyGeneratorBlock;
 import com.witchica.industrialization.block.HydroPowerTurbineBlock;
+import com.witchica.industrialization.block.base.BaseEnergyStorageBlock;
 import com.witchica.industrialization.block.entity.HydroPowerTurbineBlockEntity;
 import com.witchica.industrialization.block.entity.SolarPanelBlockEntity;
 import com.witchica.industrialization.block.entity.base.BaseEnergyGeneratorBlockEntity;
+import com.witchica.industrialization.block.entity.base.BaseEnergyStorageBlockEntity;
 import com.witchica.industrialization.client.screen.EnergyInterfaceScreen;
+import com.witchica.industrialization.client.screen.EnergyStorageScreen;
 import com.witchica.industrialization.energy.IndustrializationItemEnergyHandler;
 import com.witchica.industrialization.item.EnergyStorageItem;
 import com.witchica.industrialization.menu.EnergyInterfaceMenu;
+import com.witchica.industrialization.menu.EnergyStorageMenu;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -68,6 +72,10 @@ public class Industrialization
             new HydroPowerTurbineBlock(BlockBehaviour.Properties.of().dynamicShape().requiresCorrectToolForDrops().mapColor(DyeColor.BLUE).strength(3f, 3f).noOcclusion().sound(SoundType.METAL), Config.GENERATOR_MK_III_FE, Config.GENERATOR_MK_III_FE_STORAGE, Config.MK_III_FE_TRANSFER_RATE,  Config.HYDRO_POWER_TURBINE_WATER_MK_III_MULTIPLIER, HydroPowerTurbineBlockEntity::new));
     public static DeferredBlock<Block> MACHINE_CASING = BLOCKS.register("machine_casing", () -> new Block(BlockBehaviour.Properties.of().dynamicShape().requiresCorrectToolForDrops().mapColor(DyeColor.LIGHT_GRAY).strength(3f, 3f).noOcclusion().sound(SoundType.METAL)));
     public static DeferredBlock<Block> SILICON_INFUSED_GLASS = BLOCKS.register("silicon_infused_glass", () -> new IronBarsBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().mapColor(DyeColor.WHITE).strength(1f, 1f).noOcclusion().sound(SoundType.GLASS)));
+    public static DeferredBlock<Block> ENERGY_STORAGE_MK_I = BLOCKS.register("energy_storage_mk_i", () -> new BaseEnergyStorageBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().mapColor(DyeColor.RED).strength(3f, 3f).sound(SoundType.METAL), Config.MK_I_FE_TRANSFER_RATE, Config.ENERGY_STORAGE_MK_I_STORAGE_AMOUNT));
+    public static DeferredBlock<Block> ENERGY_STORAGE_MK_II = BLOCKS.register("energy_storage_mk_ii", () -> new BaseEnergyStorageBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().mapColor(DyeColor.RED).strength(3f, 3f).sound(SoundType.METAL), Config.MK_II_FE_TRANSFER_RATE, Config.ENERGY_STORAGE_MK_II_STORAGE_AMOUNT));
+    public static DeferredBlock<Block> ENERGY_STORAGE_MK_III = BLOCKS.register("energy_storage_mk_iii", () -> new BaseEnergyStorageBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().mapColor(DyeColor.RED).strength(3f, 3f).sound(SoundType.METAL), Config.MK_III_FE_TRANSFER_RATE, Config.ENERGY_STORAGE_MK_III_STORAGE_AMOUNT));
+
 
     public static DeferredItem<Item> SOLAR_PANEL_MK_I_ITEM = ITEMS.register("solar_panel_mk_i", () -> new BlockItem(SOLAR_PANEL_MK_I.get(), new Item.Properties()));
     public static DeferredItem<Item> SOLAR_PANEL_MK_II_ITEM = ITEMS.register("solar_panel_mk_ii", () -> new BlockItem(SOLAR_PANEL_MK_II.get(), new Item.Properties()));
@@ -77,8 +85,12 @@ public class Industrialization
     public static DeferredItem<Item> HYDRO_POWER_TURBINE_MK_III_ITEM = ITEMS.register("hydro_power_turbine_mk_iii", () -> new BlockItem(HYDRO_POWER_TURBINE_MK_III.get(), new Item.Properties()));
     public static DeferredItem<Item> MACHINE_CASING_ITEM = ITEMS.register("machine_casing", () -> new BlockItem(MACHINE_CASING.get(), new Item.Properties()));
     public static DeferredItem<Item> SILICON_INFUSED_GLASS_ITEM = ITEMS.register("silicon_infused_glass", () -> new BlockItem(SILICON_INFUSED_GLASS.get(), new Item.Properties()));
+    public static DeferredItem<Item> ENERGY_STORAGE_MK_I_ITEM = ITEMS.register("energy_storage_mk_i", () -> new BlockItem(ENERGY_STORAGE_MK_I.get(), new Item.Properties()));
+    public static DeferredItem<Item> ENERGY_STORAGE_MK_II_ITEM = ITEMS.register("energy_storage_mk_ii", () -> new BlockItem(ENERGY_STORAGE_MK_II.get(), new Item.Properties()));
+    public static DeferredItem<Item> ENERGY_STORAGE_MK_III_ITEM = ITEMS.register("energy_storage_mk_iii", () -> new BlockItem(ENERGY_STORAGE_MK_III.get(), new Item.Properties()));
 
     public static DeferredHolder<MenuType<?>, MenuType<EnergyInterfaceMenu>> ENERGY_INTERFACE_MENU_TYPE = MENU_TYPES.register("energy_interface", () -> IMenuTypeExtension.create(EnergyInterfaceMenu::new));
+    public static DeferredHolder<MenuType<?>, MenuType<EnergyStorageMenu>> ENERGY_STORAGE_MENU_TYPE = MENU_TYPES.register("energy_storage", () -> IMenuTypeExtension.create(EnergyStorageMenu::new));
     public static DeferredItem<Item> SILICON = ITEMS.register("silicon", () -> new Item(new Item.Properties()));
     public static DeferredItem<Item> CARBON = ITEMS.register("carbon", () -> new Item(new Item.Properties()));
     public static DeferredItem<Item> CARBON_SHEET = ITEMS.register("carbon_sheet", () ->new Item(new Item.Properties()));
@@ -93,6 +105,9 @@ public class Industrialization
 
     public static DeferredHolder<BlockEntityType<?>, BlockEntityType<HydroPowerTurbineBlockEntity>> HYDRO_POWER_TURBINE_BLOCK_ENTITY_TYPE =
             BLOCK_ENTITY_TYPES.register("hydro_power_turbine", () -> BlockEntityType.Builder.of(HydroPowerTurbineBlockEntity::new, HYDRO_POWER_TURBINE_MK_I.get(), HYDRO_POWER_TURBINE_MK_II.get(), HYDRO_POWER_TURBINE_MK_III.get()).build(null));
+
+    public static DeferredHolder<BlockEntityType<?>, BlockEntityType<BaseEnergyStorageBlockEntity>> ENERGY_STORAGE_BLOCK_ENTITY_TYPE =
+            BLOCK_ENTITY_TYPES.register("energy_storage", () -> BlockEntityType.Builder.of(BaseEnergyStorageBlockEntity::new /* ADD TYPES HERE */).build(null));
 
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> INDUSTRIALIZATION_GENERAL = CREATIVE_MODE_TABS.register("industrialization_general", () -> CreativeModeTab.builder()
@@ -124,6 +139,9 @@ public class Industrialization
                 output.accept(HYDRO_POWER_TURBINE_MK_I.get());
                 output.accept(HYDRO_POWER_TURBINE_MK_II.get());
                 output.accept(HYDRO_POWER_TURBINE_MK_III.get());
+                output.accept(ENERGY_STORAGE_MK_I.get());
+                output.accept(ENERGY_STORAGE_MK_II.get());
+                output.accept(ENERGY_STORAGE_MK_III.get());
             })
             .withTabsBefore(INDUSTRIALIZATION_GENERAL.getKey())
             .build());
@@ -196,6 +214,7 @@ public class Industrialization
 
             event.enqueueWork(() -> {
                 MenuScreens.register(ENERGY_INTERFACE_MENU_TYPE.get(), EnergyInterfaceScreen::new);
+                MenuScreens.register(ENERGY_STORAGE_MENU_TYPE.get(), EnergyStorageScreen::new);
             });
         }
     }

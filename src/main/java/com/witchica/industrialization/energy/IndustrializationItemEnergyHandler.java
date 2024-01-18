@@ -3,7 +3,7 @@ package com.witchica.industrialization.energy;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 
-public class IndustrializationItemEnergyHandler extends IndustrializationEnergyEnergyStorage {
+public class IndustrializationItemEnergyHandler extends IndustrializationEnergyStorage {
     private final ItemStack stack;
     public IndustrializationItemEnergyHandler(ItemStack stack, CompoundTag tag, int maxAmount, int maxTransfer) {
         super(maxAmount, maxTransfer, maxTransfer);

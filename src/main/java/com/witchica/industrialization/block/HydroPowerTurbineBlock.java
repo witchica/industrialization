@@ -1,6 +1,7 @@
 package com.witchica.industrialization.block;
 
 import com.witchica.industrialization.Industrialization;
+import com.witchica.industrialization.block.base.BaseEnergyGeneratorBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.common.ModConfigSpec;
 

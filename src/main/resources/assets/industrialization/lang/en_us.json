@@ -13,6 +13,10 @@
   "block.industrialization.hydro_power_turbine_mk_ii": "Hydro Power Turbine Mk. II",
   "block.industrialization.hydro_power_turbine_mk_iii": "Hydro Power Turbine Mk. III",
 
+  "block.industrialization.energy_storage_mk_i": "Energy Storage Mk. I",
+  "block.industrialization.energy_storage_mk_ii": "Energy Storage Mk. II",
+  "block.industrialization.energy_storage_mk_iii": "Energy Storage Mk. III",
+
   "item.industrialization.silicon": "Silicon",
   "item.industrialization.carbon": "Carbon",
   "item.industrialization.carbon_sheet": "Carbon Sheet",
