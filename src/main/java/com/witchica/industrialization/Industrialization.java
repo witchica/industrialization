@@ -1,19 +1,20 @@
 package com.witchica.industrialization;
 
 import com.mojang.logging.LogUtils;
-import com.witchica.industrialization.block.base.BaseEnergyGeneratorBlock;
-import com.witchica.industrialization.block.HydroPowerTurbineBlock;
-import com.witchica.industrialization.block.base.BaseEnergyStorageBlock;
-import com.witchica.industrialization.block.entity.HydroPowerTurbineBlockEntity;
-import com.witchica.industrialization.block.entity.SolarPanelBlockEntity;
-import com.witchica.industrialization.block.entity.base.BaseEnergyGeneratorBlockEntity;
-import com.witchica.industrialization.block.entity.base.BaseEnergyStorageBlockEntity;
-import com.witchica.industrialization.client.screen.EnergyInterfaceScreen;
-import com.witchica.industrialization.client.screen.EnergyStorageScreen;
-import com.witchica.industrialization.energy.IndustrializationItemEnergyHandler;
-import com.witchica.industrialization.item.EnergyStorageItem;
-import com.witchica.industrialization.menu.EnergyInterfaceMenu;
-import com.witchica.industrialization.menu.EnergyStorageMenu;
+import com.witchica.industrialization.features.generators.base.BaseEnergyGeneratorBlock;
+import com.witchica.industrialization.features.generators.HydroPowerTurbineBlock;
+import com.witchica.industrialization.features.storage.base.BaseEnergyStorageBlock;
+import com.witchica.industrialization.features.generators.HydroPowerTurbineBlockEntity;
+import com.witchica.industrialization.features.generators.SolarPanelBlockEntity;
+import com.witchica.industrialization.features.generators.base.BaseEnergyGeneratorBlockEntity;
+import com.witchica.industrialization.features.storage.base.BaseEnergyStorageBlockEntity;
+import com.witchica.industrialization.features.screens.client.EnergyInterfaceScreen;
+import com.witchica.industrialization.features.screens.client.EnergyStorageScreen;
+import com.witchica.industrialization.features.energy.IndustrializationItemEnergyHandler;
+import com.witchica.industrialization.features.storage.EnergyStorageItem;
+import com.witchica.industrialization.features.generators.EnergyInterfaceMenu;
+import com.witchica.industrialization.features.storage.EnergyStorageMenu;
+import com.witchica.industrialization.features.transport.EnergyPipeBlock;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -75,7 +76,7 @@ public class Industrialization
     public static DeferredBlock<Block> ENERGY_STORAGE_MK_I = BLOCKS.register("energy_storage_mk_i", () -> new BaseEnergyStorageBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().mapColor(DyeColor.RED).strength(3f, 3f).sound(SoundType.METAL), Config.MK_I_FE_TRANSFER_RATE, Config.ENERGY_STORAGE_MK_I_STORAGE_AMOUNT));
     public static DeferredBlock<Block> ENERGY_STORAGE_MK_II = BLOCKS.register("energy_storage_mk_ii", () -> new BaseEnergyStorageBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().mapColor(DyeColor.RED).strength(3f, 3f).sound(SoundType.METAL), Config.MK_II_FE_TRANSFER_RATE, Config.ENERGY_STORAGE_MK_II_STORAGE_AMOUNT));
     public static DeferredBlock<Block> ENERGY_STORAGE_MK_III = BLOCKS.register("energy_storage_mk_iii", () -> new BaseEnergyStorageBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().mapColor(DyeColor.RED).strength(3f, 3f).sound(SoundType.METAL), Config.MK_III_FE_TRANSFER_RATE, Config.ENERGY_STORAGE_MK_III_STORAGE_AMOUNT));
-
+    public static DeferredBlock<Block> ENERGY_PIPE_MK_I = BLOCKS.register("energy_pipe_mk_i", () -> new EnergyPipeBlock(BlockBehaviour.Properties.of()));
 
     public static DeferredItem<Item> SOLAR_PANEL_MK_I_ITEM = ITEMS.register("solar_panel_mk_i", () -> new BlockItem(SOLAR_PANEL_MK_I.get(), new Item.Properties()));
     public static DeferredItem<Item> SOLAR_PANEL_MK_II_ITEM = ITEMS.register("solar_panel_mk_ii", () -> new BlockItem(SOLAR_PANEL_MK_II.get(), new Item.Properties()));
@@ -88,6 +89,7 @@ public class Industrialization
     public static DeferredItem<Item> ENERGY_STORAGE_MK_I_ITEM = ITEMS.register("energy_storage_mk_i", () -> new BlockItem(ENERGY_STORAGE_MK_I.get(), new Item.Properties()));
     public static DeferredItem<Item> ENERGY_STORAGE_MK_II_ITEM = ITEMS.register("energy_storage_mk_ii", () -> new BlockItem(ENERGY_STORAGE_MK_II.get(), new Item.Properties()));
     public static DeferredItem<Item> ENERGY_STORAGE_MK_III_ITEM = ITEMS.register("energy_storage_mk_iii", () -> new BlockItem(ENERGY_STORAGE_MK_III.get(), new Item.Properties()));
+    public static DeferredItem<Item> ENERGY_PIPE_MK_I_ITEM = ITEMS.register("energy_pipe_mk_i", () -> new BlockItem(ENERGY_PIPE_MK_I.get(), new Item.Properties()));
 
     public static DeferredHolder<MenuType<?>, MenuType<EnergyInterfaceMenu>> ENERGY_INTERFACE_MENU_TYPE = MENU_TYPES.register("energy_interface", () -> IMenuTypeExtension.create(EnergyInterfaceMenu::new));
     public static DeferredHolder<MenuType<?>, MenuType<EnergyStorageMenu>> ENERGY_STORAGE_MENU_TYPE = MENU_TYPES.register("energy_storage", () -> IMenuTypeExtension.create(EnergyStorageMenu::new));
@@ -124,6 +126,7 @@ public class Industrialization
                 output.accept(BATTERY_MK_I.get());
                 output.accept(BATTERY_MK_II.get());
                 output.accept(BATTERY_MK_III.get());
+                output.accept(ENERGY_PIPE_MK_I.get());
             })
             .withTabsBefore(CreativeModeTabs.SPAWN_EGGS.location())
             .build());

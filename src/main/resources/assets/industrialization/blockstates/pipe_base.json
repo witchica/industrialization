@@ -1,0 +1,68 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "industrialization:block/pipe_middle"
+      }
+    },
+    {
+      "when": {
+        "north": true
+      },
+      "apply": {
+        "model": "industrialization:block/pipe_part",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "east": true
+      },
+      "apply": {
+        "model": "industrialization:block/pipe_part",
+        "uvlock": true,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "south": true
+      },
+      "apply": {
+        "model": "industrialization:block/pipe_part",
+        "uvlock": true,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "west": true
+      },
+      "apply": {
+        "model": "industrialization:block/pipe_part",
+        "uvlock": true,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "up": true
+      },
+      "apply": {
+        "model": "industrialization:block/pipe_part",
+        "uvlock": true,
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "down": true
+      },
+      "apply": {
+        "model": "industrialization:block/pipe_part",
+        "uvlock": true,
+        "x": -90
+      }
+    }
+  ]
+}

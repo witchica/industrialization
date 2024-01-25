@@ -1,0 +1,6 @@
+{
+  "parent": "industrialization:block/base_pipe_part",
+  "textures": {
+    "0": "industrialization:block/energy_pipe_mk_i"
+  }
+}
