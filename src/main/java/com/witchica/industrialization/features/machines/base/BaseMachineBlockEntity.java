@@ -24,6 +24,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity {
     public GenericItemStackHandler inputItems;
     public GenericItemStackHandler outputItems;
     public GenericItemStackHandler upgradeItems;
+    public GenericItemStackHandler energyItems;
 
     public int feStorageCapacity;
     public int feConsumedPerTick;
@@ -33,8 +34,9 @@ public abstract class BaseMachineBlockEntity extends BlockEntity {
         super(pType, pPos, pBlockState);
 
         this.inputItems = new GenericItemStackHandler(getMachineInputs(), this::isInputValid);
-        this.outputItems = new GenericItemStackHandler(getMachineOutputs());
-        this.upgradeItems = new GenericItemStackHandler(4);
+        this.outputItems = GenericItemStackHandler.acceptsAll(getMachineOutputs());
+        this.upgradeItems = GenericItemStackHandler.acceptsAll(4);
+        this.energyItems = GenericItemStackHandler.acceptsEnergyItemsOnly(1);
 
         this.feStorageCapacity = feStorageCapacity.get();
         this.feConsumedPerTick = feConsumedPerTick.get();
@@ -69,6 +71,10 @@ public abstract class BaseMachineBlockEntity extends BlockEntity {
             pTag.put("UpgradeItems", upgradeItems.serializeNBT());
         }
 
+        if(energyItems != null) {
+            pTag.put("EnergyItems", energyItems.serializeNBT());
+        }
+
         if(energyStorage != null) {
             pTag.put("EnergyStorage", energyStorage.serializeNBT());
         }
@@ -88,6 +94,10 @@ public abstract class BaseMachineBlockEntity extends BlockEntity {
 
         if(upgradeItems != null && pTag.contains("UpgradeItems")) {
             upgradeItems.deserializeNBT(pTag.getCompound("UpgradeItems"));
+        }
+
+        if(energyItems != null && pTag.contains("EnergyItems")) {
+            energyItems.deserializeNBT(pTag.getCompound("EnergyItems"));
         }
 
         if(energyStorage != null && pTag.contains("EnergyStorage")) {

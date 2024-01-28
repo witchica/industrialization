@@ -1,5 +1,7 @@
 package com.witchica.industrialization.features.generators.base;
 
+import com.witchica.industrialization.features.capabilities.EnergyCapabilityProvider;
+import com.witchica.industrialization.features.capabilities.ItemHandlerCapabilityProvider;
 import com.witchica.industrialization.features.screens.client.EnergyGeneratorIcon;
 import com.witchica.industrialization.features.energy.IndustrializationEnergyStorage;
 import com.witchica.industrialization.features.inventory.IndustrializationItemStackHandler;
@@ -19,12 +21,13 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Math;
 
 import java.util.List;
 
-public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
+public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity implements EnergyCapabilityProvider, ItemHandlerCapabilityProvider {
     public IndustrializationEnergyStorage energyStorage;
     public IndustrializationItemStackHandler itemStorage;
     protected int baseFePerTick;
@@ -162,6 +165,26 @@ public abstract class BaseEnergyGeneratorBlockEntity extends BlockEntity {
     public int getMaximumEnergyLevel() {
         IndustrializationEnergyStorage energy = energyStorage;
         return energy.getMaxEnergyStored();
+    }
+
+    @Override
+    public boolean isSideValidForEnergy(Direction side) {
+        return getValidCapabilitySides().contains(side);
+    }
+
+    @Override
+    public boolean isSideValidForItemHandler(Direction side) {
+        return getValidCapabilitySides().contains(side);
+    }
+
+    @Override
+    public IEnergyStorage getEnergyCapability() {
+        return energyStorage;
+    }
+
+    @Override
+    public IItemHandler getItemHandlerCapability() {
+        return itemStorage;
     }
 
     @OnlyIn(Dist.CLIENT)

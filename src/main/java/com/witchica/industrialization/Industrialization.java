@@ -1,6 +1,8 @@
 package com.witchica.industrialization;
 
 import com.mojang.logging.LogUtils;
+import com.witchica.industrialization.features.capabilities.EnergyCapabilityProvider;
+import com.witchica.industrialization.features.capabilities.ItemHandlerCapabilityProvider;
 import com.witchica.industrialization.features.generators.base.BaseEnergyGeneratorBlock;
 import com.witchica.industrialization.features.generators.HydroPowerTurbineBlock;
 import com.witchica.industrialization.features.storage.base.BaseEnergyStorageBlock;
@@ -27,6 +29,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.api.distmarker.Dist;
@@ -109,7 +112,7 @@ public class Industrialization
             BLOCK_ENTITY_TYPES.register("hydro_power_turbine", () -> BlockEntityType.Builder.of(HydroPowerTurbineBlockEntity::new, HYDRO_POWER_TURBINE_MK_I.get(), HYDRO_POWER_TURBINE_MK_II.get(), HYDRO_POWER_TURBINE_MK_III.get()).build(null));
 
     public static DeferredHolder<BlockEntityType<?>, BlockEntityType<BaseEnergyStorageBlockEntity>> ENERGY_STORAGE_BLOCK_ENTITY_TYPE =
-            BLOCK_ENTITY_TYPES.register("energy_storage", () -> BlockEntityType.Builder.of(BaseEnergyStorageBlockEntity::new /* ADD TYPES HERE */).build(null));
+            BLOCK_ENTITY_TYPES.register("energy_storage", () -> BlockEntityType.Builder.of(BaseEnergyStorageBlockEntity::new, ENERGY_STORAGE_MK_I.get(), ENERGY_STORAGE_MK_II.get(), ENERGY_STORAGE_MK_III.get()).build(null));
 
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> INDUSTRIALIZATION_GENERAL = CREATIVE_MODE_TABS.register("industrialization_general", () -> CreativeModeTab.builder()
@@ -189,22 +192,29 @@ public class Industrialization
 
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, SOLAR_PANEL_BLOCK_ENTITY_TYPE.get(), Industrialization::getItemCapability);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, HYDRO_POWER_TURBINE_BLOCK_ENTITY_TYPE.get(), Industrialization::getItemCapability);
+
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, ENERGY_STORAGE_BLOCK_ENTITY_TYPE.get(), Industrialization::getEnergyCapabiity);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ENERGY_STORAGE_BLOCK_ENTITY_TYPE.get(), Industrialization::getItemCapability);
     }
 
-    private static IEnergyStorage getEnergyCapabiity(BaseEnergyGeneratorBlockEntity entity, Direction side) {
-        if(entity.getValidCapabilitySides().contains(side)) {
-            return entity.energyStorage;
-        } else {
-            return null;
+    private static IEnergyStorage getEnergyCapabiity(BlockEntity entity, Direction side) {
+        if(entity instanceof EnergyCapabilityProvider energyCapabilityProvider) {
+            if(energyCapabilityProvider.isSideValidForEnergy(side)) {
+                return energyCapabilityProvider.getEnergyCapability();
+            }
         }
+
+        return null;
     }
 
-    private static IItemHandler getItemCapability(BaseEnergyGeneratorBlockEntity entity, Direction side) {
-        if(entity.getValidCapabilitySides().contains(side)) {
-            return entity.itemStorage;
-        } else {
-            return null;
+    private static IItemHandler getItemCapability(BlockEntity entity, Direction side) {
+        if(entity instanceof ItemHandlerCapabilityProvider itemHandlerCapabilityProvider) {
+            if(itemHandlerCapabilityProvider.isSideValidForItemHandler(side)) {
+                return itemHandlerCapabilityProvider.getItemHandlerCapability();
+            }
         }
+
+        return null;
     }
 
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

@@ -7,6 +7,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
+@Deprecated
 public class IndustrializationItemStackHandler extends ItemStackHandler {
 
     private final BaseEnergyGeneratorBlockEntity parent;

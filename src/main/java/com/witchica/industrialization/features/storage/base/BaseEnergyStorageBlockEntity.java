@@ -1,10 +1,13 @@
 package com.witchica.industrialization.features.storage.base;
 
 import com.witchica.industrialization.Industrialization;
+import com.witchica.industrialization.features.capabilities.EnergyCapabilityProvider;
+import com.witchica.industrialization.features.capabilities.ItemHandlerCapabilityProvider;
 import com.witchica.industrialization.features.screens.client.EnergyGeneratorIcon;
 import com.witchica.industrialization.features.energy.IndustrializationEnergyStorage;
 import com.witchica.industrialization.features.inventory.IndustrializationItemStackHandler;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -18,10 +21,11 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Math;
 
-public class BaseEnergyStorageBlockEntity extends BlockEntity {
+public class BaseEnergyStorageBlockEntity extends BlockEntity implements ItemHandlerCapabilityProvider, EnergyCapabilityProvider {
     public IndustrializationEnergyStorage energyStorage;
     public IndustrializationItemStackHandler itemStorage;
     protected int feInputOutputPerTick;
@@ -152,5 +156,25 @@ public class BaseEnergyStorageBlockEntity extends BlockEntity {
     @OnlyIn(Dist.CLIENT)
     public Component getCurrentStatusText() {
         return Component.literal("");
+    }
+
+    @Override
+    public IEnergyStorage getEnergyCapability() {
+        return energyStorage;
+    }
+
+    @Override
+    public boolean isSideValidForEnergy(Direction side) {
+        return true;
+    }
+
+    @Override
+    public IItemHandler getItemHandlerCapability() {
+        return itemStorage;
+    }
+
+    @Override
+    public boolean isSideValidForItemHandler(Direction side) {
+        return true;
     }
 }
