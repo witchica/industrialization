@@ -104,6 +104,12 @@ public class Industrialization
     public static DeferredItem<Item> BATTERY_MK_II = ITEMS.register("battery_mk_ii", () -> new EnergyStorageItem(new Item.Properties().stacksTo(1).setNoRepair(), Config.BATTERY_MK_II_FE_STORAGE, Config.MK_II_FE_TRANSFER_RATE));
     public static DeferredItem<Item> BATTERY_MK_III = ITEMS.register("battery_mk_iii", () -> new EnergyStorageItem(new Item.Properties().stacksTo(1).setNoRepair(), Config.BATTERY_MK_III_FE_STORAGE, Config.MK_III_FE_TRANSFER_RATE));
 
+    public static DeferredItem<Item> COAL_DUST = ITEMS.register("coal_dust", () ->  new Item(new Item.Properties()));
+    public static DeferredItem<Item> COPPER_DUST = ITEMS.register("copper_dust", () ->  new Item(new Item.Properties()));
+    public static DeferredItem<Item> IRON_DUST = ITEMS.register("iron_dust", () ->  new Item(new Item.Properties()));
+    public static DeferredItem<Item> GOLD_DUST = ITEMS.register("gold_dust", () ->  new Item(new Item.Properties()));
+    public static DeferredItem<Item> DIAMOND_DUST = ITEMS.register("diamond_dust", () ->  new Item(new Item.Properties()));
+    public static DeferredItem<Item> NETHER_QUARTZ_DUST = ITEMS.register("nether_quartz_dust", () ->  new Item(new Item.Properties()));
 
     public static DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarPanelBlockEntity>> SOLAR_PANEL_BLOCK_ENTITY_TYPE =
             BLOCK_ENTITY_TYPES.register("solar_panel", () -> BlockEntityType.Builder.of(SolarPanelBlockEntity::new, SOLAR_PANEL_MK_I.get(), SOLAR_PANEL_MK_II.get(), SOLAR_PANEL_MK_III.get()).build(null));
@@ -130,6 +136,12 @@ public class Industrialization
                 output.accept(BATTERY_MK_II.get());
                 output.accept(BATTERY_MK_III.get());
                 output.accept(ENERGY_PIPE_MK_I.get());
+                output.accept(COAL_DUST.get());
+                output.accept(COPPER_DUST.get());
+                output.accept(IRON_DUST.get());
+                output.accept(GOLD_DUST.get());
+                output.accept(DIAMOND_DUST.get());
+                output.accept(NETHER_QUARTZ_DUST.get());
             })
             .withTabsBefore(CreativeModeTabs.SPAWN_EGGS.location())
             .build());
